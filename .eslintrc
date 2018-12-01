@@ -1,0 +1,47 @@
+{
+    "extends": "airbnb",
+    "env": {
+        "browser": true,
+        "node": true,
+        "jest": true
+    },
+    "parser": "babel-eslint",
+    "rules": {
+        "comma-dangle": 0,
+        "react/prop-types": 0,
+        "no-use-before-define": 0,
+        "radix": 0,
+        "no-param-reassign": 0,
+        "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }], // React Native has JSX in JS files，项目名后缀是.js和.jsx
+        "no-plusplus": 0,
+        "react/require-default-props": 0,
+        "react/forbid-prop-types": 0,
+        "prefer-destructuring": 0,
+        "react/jsx-no-bind": 0,
+        "react/jsx-indent": ["error", 4],
+        "react/jsx-indent-props": ["error", 4],
+        "indent": ["error", 4],
+        "react/sort-comp": 0,//强制组件方法顺序
+        "react/destructuring-assignment": [1, "always"],
+        "no-underscore-dangle": 0,
+        "no-unused-vars": 0,
+        "max-len": [2, 105],
+        //      "max-lines":0,
+        "react/no-array-index-key": 0, // 允许使用key作为迭代的下标
+        "no-shadow": 0,//外部作用域中的变量不能与它所包含的作用域中的变量或参数同名
+        "eol-last": 2,
+        //        "react/prefer-stateless-function": [0], // 不区分是否无状态组件
+        "max-depth": [0, 4],//嵌套块深度
+        //        "react/no-access-state-in-setState": [0], // 在引用前一个状态时在setState中使用回调
+        "consistent-return": 0,//return 后面是否允许省略
+        //        react/no-unused-state 避免定义未使用的state 2
+        "no-unused-expressions": 0,// 允许三目运算不反悔布尔值
+        "import/no-unresolved": "off",
+        "global-require": "off",
+        "no-bitwise": "off",
+        "prefer-const": 0, // 首选const
+        "array-callback-return": "off",
+        "no-restricted-syntax": ["error", "WithStatement"],	//禁止指定语法
+        "class-methods-use-this": "off" // 关闭class 类中没有使用this
+    }
+}
