@@ -67,7 +67,7 @@ class Header extends Component {
                             name="ios-list-box-outline"
                             style={Tradeheaderstyles.listIcon}
                             onPress={() => {
-                                this.props.navigation.navigate('Rule', );
+                                this.props.navigation.navigate('Rule');
                             }}
                         />
                         <View style={Tradeheaderstyles.listIcon}>
@@ -165,7 +165,7 @@ class Header extends Component {
 const Tradeheaderstyles = StyleSheet.create({
     container: {
         backgroundColor: '#000',
-        height: 55,
+        height: isIphoneX() ? 64 : 55,
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'space-around'
@@ -173,24 +173,24 @@ const Tradeheaderstyles = StyleSheet.create({
     body: {
         flexDirection: 'row',
         flex: 1,
-        height: 55,
+        height: isIphoneX() ? 64 : 55,
         alignItems: 'center'
     },
     back: {
         position: 'absolute',
         width: 40 * RATIO,
-        height: isIphoneX() ? 60 : 55,
+        height: isIphoneX() ? 64 : 55,
         fontSize: 24,
         color: '#000',
         left: 8,
-        top: 22,
+        top: isIphoneX() ? 35 : 25,
         zIndex: 1
     },
     listIcon: {
         alignSelf: 'center',
         width: 50,
         flexDirection: 'row',
-        height: isIphoneX() ? 60 : 55,
+        height: isIphoneX() ? 64 : 55,
         marginRight: 5
     },
     positionTac: {

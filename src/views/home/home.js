@@ -14,6 +14,7 @@ import {
 import Swiper from 'react-native-swiper';
 import { observer, inject } from 'mobx-react/native';
 import Icons from 'react-native-vector-icons/Ionicons';
+import SafeBody from '../../common/safeView';
 import Position from './subpage/position';
 
 const width = Dimensions.get('window').width; // 全屏宽高
@@ -58,13 +59,14 @@ class HomePage extends Component {
         const { navigation } = this.props;
 
         return (
-            <View style={HomeStyles.root}>
+            <SafeBody style={HomeStyles.root}>
                 <ScrollView>
                     <View style={HomeStyles.statusBarContainer}>
                         <StatusBar
                             animated
                             hidden={false}
-                            backgroundColor="transparent"
+                            backgroundColor="green"
+                            barStyle="light-content"
                             translucent
                         />
                         <View style={HomeStyles.swiperContainer}>
@@ -236,7 +238,7 @@ class HomePage extends Component {
                         <Position params={params} arr={data} navigation={navigation} />
                     </View>
                 </ScrollView>
-            </View>
+            </SafeBody>
         );
     }
 }
