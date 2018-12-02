@@ -7,13 +7,14 @@ import {
     Text,
     StyleSheet,
     Dimensions,
-    StatusBar,
+    TouchableHighlight,
     ImageBackground,
     Image,
     TextInput
 } from 'react-native';
 import { observer, inject } from 'mobx-react/native';
 import Icons from 'react-native-vector-icons/Ionicons';
+import RulesItems from '../../../constant/rules';
 
 const width = Dimensions.get('window').width; // 全屏宽高
 const height = Dimensions.get('window').height; // 全屏宽高
@@ -34,12 +35,50 @@ class Rules extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            show: false
+            info: RulesItems
         };
+        this.selectInfo = this.selectInfo.bind(this);
     }
 
-    handleSwitch() {
-        //
+    selectInfo(index) {
+        let that = this;
+        const tempInfo = that.state.info;
+        const element = tempInfo[index];
+        element.show = !element.show;
+        this.setState({
+            info: tempInfo
+        });
+    }
+
+    renderInfo() {
+        const content = this.state.info.map((item, i) => {
+            if (item.show) {
+                return (
+                    <View key={i} style={RulesStyles.infoCellRoot}>
+                        <TouchableHighlight onPress={() => this.selectInfo(i)}>
+                            <View>
+                                <View style={RulesStyles.descWrap}>
+                                    <Text style={RulesStyles.leftDesc}>{item.title}</Text>
+                                </View>
+                            </View>
+                        </TouchableHighlight>
+                        <Text style={RulesStyles.infoContent}>{item.content}</Text>
+                    </View>
+                );
+            }
+            return (
+                <View key={i} style={RulesStyles.infoCellRoot}>
+                    <TouchableHighlight onPress={() => this.selectInfo(i)}>
+                        <View>
+                            <View style={RulesStyles.descWrap}>
+                                <Text style={RulesStyles.leftDesc}>{item.title}</Text>
+                            </View>
+                        </View>
+                    </TouchableHighlight>
+                </View>
+            );
+        });
+        return content;
     }
 
     render() {
@@ -344,153 +383,7 @@ class Rules extends Component {
                         </View>
                     </View>
                     <View style={RulesStyles.part2}>
-                        <View style={{
-                            width,
-                        }}
-                        >
-                            <Text style={{
-                                backgroundColor: '#e6e6e6',
-                                textAlign: 'center',
-                                height: 55,
-                                width,
-                                fontSize: 18,
-                                color: '#333'
-                            }}
-                            >
-                                新手练习
-                            </Text>
-                            <Text>如果您是新手，没有交易经验，建议您到模拟练习区进行模拟交易</Text>
-                        </View>
-                        <View>
-                            <Text style={{
-                                backgroundColor: '#e6e6e6',
-                                textAlign: 'center',
-                                height: 55,
-                                fontSize: 18,
-                                color: '#333'
-                            }}
-                            >
-                                什么是元模式 / 角模式
-                            </Text>
-                            <Text>如果您是新手，没有交易经验，建议您到模拟练习区进行模拟交易</Text>
-                        </View>
-                        <View>
-                            <Text style={{
-                                backgroundColor: '#e6e6e6',
-                                textAlign: 'center',
-                                height: 55,
-                                fontSize: 18,
-                                color: '#333'
-                            }}
-                            >
-                                什么是买涨
-                            </Text>
-                            <Text>如果您是新手，没有交易经验，建议您到模拟练习区进行模拟交易</Text>
-                        </View>
-                        <View>
-                            <Text style={{
-                                backgroundColor: '#e6e6e6',
-                                textAlign: 'center',
-                                height: 55,
-                                fontSize: 18,
-                                color: '#333'
-                            }}
-                            >
-                                什么是买跌
-                            </Text>
-                            <Text>如果您是新手，没有交易经验，建议您到模拟练习区进行模拟交易</Text>
-                        </View>
-                        <View>
-                            <Text style={{
-                                backgroundColor: '#e6e6e6',
-                                textAlign: 'center',
-                                height: 55,
-                                fontSize: 18,
-                                color: '#333'
-                            }}
-                            >
-                                什么是止盈
-                            </Text>
-                            <Text>如果您是新手，没有交易经验，建议您到模拟练习区进行模拟交易</Text>
-                        </View>
-                        <View>
-                            <Text style={{
-                                backgroundColor: '#e6e6e6',
-                                textAlign: 'center',
-                                height: 55,
-                                fontSize: 18,
-                                color: '#333'
-                            }}
-                            >
-                                什么是止损
-                            </Text>
-                            <Text>如果您是新手，没有交易经验，建议您到模拟练习区进行模拟交易</Text>
-                        </View>
-                        <View>
-                            <Text style={{
-                                backgroundColor: '#e6e6e6',
-                                textAlign: 'center',
-                                height: 55,
-                                fontSize: 18,
-                                color: '#333'
-                            }}
-                            >
-                                什么是持仓时间
-                            </Text>
-                            <Text>如果您是新手，没有交易经验，建议您到模拟练习区进行模拟交易</Text>
-                        </View>
-                        <View>
-                            <Text style={{
-                                backgroundColor: '#e6e6e6',
-                                textAlign: 'center',
-                                height: 55,
-                                fontSize: 18,
-                                color: '#333'
-                            }}
-                            >
-                                大涨大跌交易限制
-                            </Text>
-                            <Text>如果您是新手，没有交易经验，建议您到模拟练习区进行模拟交易</Text>
-                        </View>
-                        <View>
-                            <Text style={{
-                                backgroundColor: '#e6e6e6',
-                                textAlign: 'center',
-                                height: 55,
-                                fontSize: 18,
-                                color: '#333'
-                            }}
-                            >
-                                交易综合费
-                            </Text>
-                            <Text>如果您是新手，没有交易经验，建议您到模拟练习区进行模拟交易</Text>
-                        </View>
-                        <View>
-                            <Text style={{
-                                backgroundColor: '#e6e6e6',
-                                textAlign: 'center',
-                                height: 55,
-                                fontSize: 18,
-                                color: '#333'
-                            }}
-                            >
-                                履约保证金
-                            </Text>
-                            <Text>如果您是新手，没有交易经验，建议您到模拟练习区进行模拟交易</Text>
-                        </View>
-                        <View>
-                            <Text style={{
-                                backgroundColor: '#e6e6e6',
-                                textAlign: 'center',
-                                height: 55,
-                                fontSize: 18,
-                                color: '#333'
-                            }}
-                            >
-                                盈利如何分配
-                            </Text>
-                            <Text>如果您是新手，没有交易经验，建议您到模拟练习区进行模拟交易</Text>
-                        </View>
+                        {this.renderInfo()}
                     </View>
                 </ScrollView>
             </View>
@@ -515,5 +408,24 @@ const RulesStyles = StyleSheet.create({
     part2: {
         width,
         justifyContent: 'space-around'
-    }
+    },
+    infoCellRoot: {
+        borderBottomWidth: 1,
+        borderBottomColor: '#e1e1e1'
+    },
+    descWrap: {
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        paddingHorizontal: 10,
+        paddingVertical: 10,
+        backgroundColor: '#fff',
+    },
+    leftDesc: {},
+    rightDesc: {
+        color: '#F7C5B6',
+    },
+    infoContent: {
+        backgroundColor: '#fff',
+        padding: 10
+    },
 });
