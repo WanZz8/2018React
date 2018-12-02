@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { observer, inject } from 'mobx-react/native';
 import Icons from 'react-native-vector-icons/Ionicons';
+import SafeBody from '../../common/safeView';
 
 const width = Dimensions.get('window').width; // 全屏宽高
 const height = Dimensions.get('window').height; // 全屏宽高
@@ -40,8 +41,13 @@ class Mine extends Component {
 
     render() {
         return (
-            <View style={MineStyles.root}>
-                <ScrollView>
+            <SafeBody style={MineStyles.root} color="#F8F7F4">
+                <ScrollView contentContainerStyle={{
+                    justifyContent: 'flex-start',
+                    width,
+                    backgroundColor: '#F8F7F4'
+                }}
+                >
                     <View style={MineStyles.statusContainer}>
                         <StatusBar
                             animated
@@ -423,7 +429,7 @@ class Mine extends Component {
                                     );
                                 }}
                             style={{
-                                marginBottom: 10,
+                                marginBottom: 300,
                                 backgroundColor: '#fff'
                             }}
                         >
@@ -471,7 +477,7 @@ class Mine extends Component {
                         </TouchableOpacity>
                     </View>
                 </ScrollView>
-            </View>
+            </SafeBody>
         );
     }
 }
@@ -501,7 +507,7 @@ const MineStyles = StyleSheet.create({
     },
     listContainer: {
         marginTop: 25,
-        // backgroundColor: '#fff'
+        backgroundColor: '#F8F7F4'
     },
     noticeCon: {
         width,

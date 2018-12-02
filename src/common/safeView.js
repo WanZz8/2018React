@@ -47,7 +47,7 @@ class SafeBody extends Component {
     render() {
         if (isIphoneX()) {
             return (
-                <SafeAreaView style={style.container}>
+                <SafeAreaView style={[style.container]}>
                     {this.props.children}
                 </SafeAreaView>
             );
@@ -65,7 +65,6 @@ export default SafeBody;
 const style = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: isIphoneX() ? '#000' : '#fff',
         flexDirection: 'column',
         justifyContent: 'flex-start',
     },
