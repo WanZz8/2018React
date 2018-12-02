@@ -17,6 +17,7 @@ import Icons from 'react-native-vector-icons/Ionicons';
 import WKWebView from 'react-native-wkwebview-reborn';
 import { formatDate } from '../../utils/tool';
 import Header from './subpage/header';
+import SafeBody from '../../common/safeView';
 import LoadingView from '../../common/LoadingView';
 import { CHART_URL } from '../../config/baseConfig';
 
@@ -148,7 +149,7 @@ class TradePage extends Component {
         let date = new Date().getTime();
         console.log(date);
         return (
-            <View style={TradeStyles.root}>
+            <SafeBody style={TradeStyles.root}>
                 <Header
                     navigation={this.props.navigation}
                     code={this.state.code}
@@ -353,7 +354,7 @@ class TradePage extends Component {
                         </Text>
                     </TouchableOpacity>
                 </View>
-            </View>
+            </SafeBody>
         );
     }
 }
@@ -362,13 +363,14 @@ class TradePage extends Component {
 const TradeStyles = StyleSheet.create({
     root: {
         flex: 1,
-        // width,
+        width,
         backgroundColor: '#FFF'
     },
     PartTop1: {
         // 上面的分时图
         width,
-        flex: 2
+        flex: 2,
+        backgroundColor: '#FFF'
     },
     rulesContainer: {
         width,
@@ -385,13 +387,15 @@ const TradeStyles = StyleSheet.create({
     WebViewContainer: {
         flex: 8,
         width,
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: '#FFF'
     },
     controContainer: {
         width,
         justifyContent: 'space-around',
         alignItems: 'center',
         flexDirection: 'row',
+        backgroundColor: '#FFF',
         flex: 1
     }
 });

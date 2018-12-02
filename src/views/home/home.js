@@ -60,7 +60,7 @@ class HomePage extends Component {
 
         return (
             <SafeBody style={HomeStyles.root}>
-                <ScrollView>
+                <ScrollView style={{ backgroundColor: '#f9f8f5' }}>
                     <View style={HomeStyles.statusBarContainer}>
                         <StatusBar
                             animated
@@ -247,7 +247,8 @@ const HomeStyles = StyleSheet.create({
     root: {
         flex: 1,
         width,
-        height
+        height,
+        backgroundColor: '#ffffff',
     },
     statusBarContainer: {
         // alignItems: 'center'
@@ -263,7 +264,7 @@ const HomeStyles = StyleSheet.create({
         width,
     },
     scrollContainer: {
-        // backgroundColor: '#ffffff',
+        backgroundColor: '#ffffff',
         width
     },
     noticeCon: {

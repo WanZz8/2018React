@@ -65,7 +65,7 @@ export default SafeBody;
 const style = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: isIphoneX() ? '#000' : '#fff',
         flexDirection: 'column',
         justifyContent: 'flex-start',
     },

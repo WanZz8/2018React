@@ -63,13 +63,6 @@ class Header extends Component {
                                 </View>
                             </TouchableHighlight>
                         </View>
-                        <Icons
-                            name="ios-list-box-outline"
-                            style={Tradeheaderstyles.listIcon}
-                            onPress={() => {
-                                this.props.navigation.navigate('Rule');
-                            }}
-                        />
                         <View style={Tradeheaderstyles.listIcon}>
                             <TouchableOpacity
                                 style={Tradeheaderstyles.positionTac}
@@ -165,7 +158,7 @@ class Header extends Component {
 const Tradeheaderstyles = StyleSheet.create({
     container: {
         backgroundColor: '#000',
-        height: isIphoneX() ? 64 : 55,
+        height: isIphoneX() ? 68 : 55,
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'space-around'
@@ -173,13 +166,13 @@ const Tradeheaderstyles = StyleSheet.create({
     body: {
         flexDirection: 'row',
         flex: 1,
-        height: isIphoneX() ? 64 : 55,
+        height: isIphoneX() ? 68 : 55,
         alignItems: 'center'
     },
     back: {
         position: 'absolute',
         width: 40 * RATIO,
-        height: isIphoneX() ? 64 : 55,
+        height: isIphoneX() ? 68 : 55,
         fontSize: 24,
         color: '#000',
         left: 8,
@@ -234,7 +227,7 @@ const Tradeheaderstyles = StyleSheet.create({
         paddingVertical: 5,
         paddingHorizontal: 10,
         color: '#F7C5B6',
-        fontSize: 17,
+        fontSize: 16,
         fontWeight: 'bold'
     },
     triangle: {
