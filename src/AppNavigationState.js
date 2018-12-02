@@ -11,6 +11,7 @@ import {
     Text,
     StyleSheet
 } from 'react-native';
+import JPushModule from 'jpush-react-native';
 import { observer, inject } from 'mobx-react';
 import codePush from 'react-native-code-push';
 // import { NavigationActions, } from 'react-navigation';
