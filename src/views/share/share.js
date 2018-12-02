@@ -11,8 +11,11 @@ import {
     StyleSheet
 } from 'react-native';
 import Icons from 'react-native-vector-icons/Ionicons';
+import {
+    DOMAIN
+} from '../../config/baseConfig';
 
-// const inviteFriend = require('./../../../images/mine/share.jpg');
+const inviteFriend = require('./../../img/mine/recommend-bg.jpg');
 
 const width = Dimensions.get('window').width; // 全屏宽高
 const height = Dimensions.get('window').height;
@@ -32,19 +35,8 @@ class Share extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLogin: '',
-            userId: '',
-            linkAddress: '',
-            qrAddress: ''
+            linkAddress: `${DOMAIN}/?ru=8413`,
         };
-    }
-
-
-    getInfoCallback() {
-        this.setState({
-            userId: Cache.userId,
-            linkAddress: ''
-        });
     }
 
     componentDidMount() {
@@ -57,19 +49,22 @@ class Share extends Component {
         Alert.alert('提示', '复制成功，快去推广吧！');
     }
 
-    componentWillUnmount() {
-        // Schedule.removeEventListeners(this);
-    }
-
     render() {
         return (
             <View style={ShareStyles.root}>
-                <ScrollView>
+                <ScrollView contentContainerStyle={{
+                    justifyContent: 'flex-start',
+                    paddingBottom: 100,
+                    width,
+                }}
+                >
                     <Image
                         style={{
-                            resizeMode: 'stretch'
+                            resizeMode: 'stretch',
+                            width,
+                            height,
                         }}
-                        // source={inviteFriend}
+                        source={inviteFriend}
                     />
                     <View style={{
                         marginTop: 10,
