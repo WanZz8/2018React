@@ -17,7 +17,7 @@ import HTML from 'react-native-render-html';
 import { formatDate } from '../../utils/tool';
 
 const width = Dimensions.get('window').width; // 全屏宽高
-const height = Dimensions.get('window').width; // 全屏宽高
+const height = Dimensions.get('window').height; // 全屏宽高
 
 @inject('NoticeStore')
 @observer
@@ -65,7 +65,7 @@ class Find extends Component {
                     <View style={FindStyles.mainContainer}>
                         {content.length ? content.map((item, idx) => {
                             let time = new Date(item.time.time);
-                            time = formatDate('y-m-d h:i:s', { time });
+                            time = formatDate('y-m-d h:i', { time });
                             if (this.state.selectedIndex === idx) {
                                 return (
                                     <TouchableOpacity
