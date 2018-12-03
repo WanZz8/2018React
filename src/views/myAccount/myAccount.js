@@ -9,12 +9,13 @@ import {
     Alert,
     Dimensions
 } from 'react-native';
-
+import { observer, inject } from 'mobx-react/native';
 import Icons from 'react-native-vector-icons/Ionicons';
 
 const width = Dimensions.get('window').width; // 全屏宽高
 const height = Dimensions.get('window').height; // 全屏宽高
 
+@inject('CacheStore')
 class MyAccount extends Component {
     static navigationOptions = ({ navigation }) => ({
         title: '账户中心',
@@ -135,7 +136,8 @@ class MyAccount extends Component {
                                 fontSize: 18,
                                 color: '#F7C5B6',
                                 fontWeight: 'bold',
-                                flex: 1
+                                flex: 1,
+                                top: 5
                             }}
                             >
                                 模拟币

@@ -119,7 +119,7 @@ class Mine extends Component {
                                                 fontSize: 15
                                             }}
                                             >
-                                            欢迎回来
+                                                欢迎回来
                                             </Text>
                                         ) : [
                                             <Text
@@ -130,7 +130,7 @@ class Mine extends Component {
                                                 }}
                                                 key="ss11"
                                             >
-                                                    未登录
+                                                未登录
                                             </Text>,
                                             <Text
                                                 style={{
@@ -469,9 +469,23 @@ class Mine extends Component {
                         <TouchableOpacity
                             onPress={
                                 () => {
-                                    this.props.navigation.navigate(
-                                        'MyAccount'
-                                    );
+                                    this.props.CacheStore.isLogin && this.state.status
+                                        ? this.props.navigation.navigate(
+                                            'MyAccount'
+                                        ) : Alert.alert('提示', '请先登录', [
+                                            {
+                                                text: '确定',
+                                                onPress: () => this.props.navigation.navigate(
+                                                    'Login', {
+                                                        refresh() {
+                                                            that.setState({
+                                                                status: true
+                                                            });
+                                                        }
+                                                    }
+                                                )
+                                            }
+                                        ]);
                                 }}
                             style={{
                                 marginBottom: 300,
