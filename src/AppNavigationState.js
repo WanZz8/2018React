@@ -22,10 +22,10 @@ import RootNavigator from './routers/router';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
-const IMG = require('./img/loading/loading.jpg');
+const IMG = require('./img/loading/start.png');
 
 @codePush
-@inject('MainStore')
+@inject('MainStore', 'CacheStore')
 @observer
 class AppNavigationState extends Component {
     constructor(props) {
@@ -46,6 +46,8 @@ class AppNavigationState extends Component {
         this.sync();
         setTimeout(() => this.loadingText(), 2000);
         this.loadingFinish();
+        this.props.MainStore.getData();
+        this.props.CacheStore.init();
     }
 
     componentWillUnmount() {

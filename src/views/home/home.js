@@ -42,7 +42,6 @@ class HomePage extends Component {
 
     componentDidMount() {
         this.props.HomeStore.getNotice();
-        this.props.MainStore.getData();
     }
 
     sharelink() {

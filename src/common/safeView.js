@@ -66,6 +66,7 @@ const style = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
+        backgroundColor: isIphoneX() ? '#000' : '#fff',
         justifyContent: 'flex-start',
     },
     loadingMask: {

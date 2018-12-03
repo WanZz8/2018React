@@ -4,7 +4,7 @@ import JPushModule from 'jpush-react-native';
 import { POST, GET } from '../utils/request';
 import {
     HOST,
-    DOMAIN
+    DOMAIN, QUOTE
 } from '../config/baseConfig';
 
 class CacheStore {
@@ -15,9 +15,9 @@ class CacheStore {
 
     @observable jpush = '';
 
-    @observable account = 0;
+    @observable account = '';
 
-    @observable password = 0;
+    @observable password = '';
 
     @observable phone = 0;
 
@@ -43,13 +43,22 @@ class CacheStore {
                 AsyncStorage.setItem('jpush', registrationId);
             });
         }
+        this.getUserInfo();
 
-        const [account, password] = await this.getUserFromCache();
+        this.getBank();
+
+        const account = await AsyncStorage.getItem('account');
+        const password = await AsyncStorage.getItem('password');
+
+        console.log(account);
+        console.log(password);
 
         if (!account || !password) { throw ''; }
 
         this.account = account;
         this.password = password;
+
+        const result = await this.resumeLogin();
     }
 
     @action
@@ -58,6 +67,36 @@ class CacheStore {
         const password = await AsyncStorage.getItem('password');
         return new Promise((resolve, reject) => {
             resolve([account, password]);
+        });
+    }
+
+
+    @action
+    async getUserInfo() {
+        console.log(2);
+        await GET(`${HOST}/mine/index.htm`).then((data) => {
+            console.log(data);
+            this.username = data.user.username;
+            this.userId = data.user.id;
+            this.realBalance = data.asset.money;
+            this.gameBalance = data.asset.game;
+            this.hello = data.hello;
+        });
+    }
+
+    @action
+    async getBank() {
+        console.log(3);
+        await GET(`${HOST}/mine/profile.htm`).then((data) => {
+            console.log(data);
+            this.bankCardCount = data.bankCardCount;
+            this.realName = data.info.name;
+            this.phone = data.info.mobile;
+            this.idNumber = data.info.identityNumber;
+            this.nickname = data.user.username;
+            this.idNumberValid = data.info.identityNumberValid;
+            this.withdrawPass = data.user.withdrawPw;
+            this.userLevel = data.level;
         });
     }
 
@@ -89,16 +128,25 @@ class CacheStore {
         });
     }
 
-    @action
-    getUserInfo() {
-        GET(`${HOST}/mine/index.htm`).then((res) => {
-            console.log(res);
-        });
-    }
+    // @action
+    // getUserInfo() {
+    //     GET(`${HOST}/mine/index.htm`).then((res) => {
+    //         console.log(res);
+    //     });
+    // }
 
     @action
     resumeLogin() {
-        //
+        return POST(`${HOST}/sso/user_login_check`, {
+            mobile: this.account,
+            password: this.password,
+            jpush: this.jpush
+        });
+
+        // 拿行情数据
+        // const res = await fetch(`${QUOTE}${url}${str}`, {
+        //     method: 'POST'
+        // });
     }
 }
 
