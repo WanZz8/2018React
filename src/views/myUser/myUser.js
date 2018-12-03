@@ -4,7 +4,9 @@ import {
     Text,
     FlatList,
     StyleSheet,
-    Dimensions, TouchableOpacity
+    Dimensions,
+    Image,
+    TouchableOpacity
 } from 'react-native';
 import Icons from 'react-native-vector-icons/Ionicons';
 import { POST, GET } from '../../utils/request'; // 全屏宽高
@@ -13,6 +15,7 @@ import { SCREEN_WIDTH, HOST, QUOTE } from '../../config/baseConfig';
 
 const width = Dimensions.get('window').width; // 全屏宽高
 const height = Dimensions.get('window').height;
+const IMG = require('../../img/404.jpg');
 
 class UserInfo extends Component {
     static navigationOptions =({ navigation }) => ({
@@ -52,6 +55,7 @@ class UserInfo extends Component {
     }
 
     componentDidMount() {
+        console.log(this.state.users);
         this.getUser();
     }
 
