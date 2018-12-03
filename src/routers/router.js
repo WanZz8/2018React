@@ -12,6 +12,7 @@ import Server from '../views/server/server'; // 在线客服
 import TradePage from '../views/trade/trade';
 import Rules from '../views/trade/subpage/rules';
 import Order from '../views/order/order';
+import Position from '../views/position/position';
 
 import Find from '../views/find/find';
 
@@ -121,6 +122,7 @@ const RootNavigator = StackNavigator(
         Sort: { screen: Sort },
         Share: { screen: Share },
         Order: { screen: Order },
+        Position: { screen: Position },
         Server: { screen: Server },
         Login: { screen: Login },
         Register: { screen: Register },

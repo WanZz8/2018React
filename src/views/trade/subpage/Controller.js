@@ -142,7 +142,7 @@ class Controller extends Component {
                                 'white',
                                 this.state.active ? '#C7C7CC' : '#CD3A3C',
                                 () => {
-                                    //
+                                    this.props.navigation.navigate('Position');
                                 }
                             )}
                         </View>]

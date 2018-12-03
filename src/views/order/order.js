@@ -86,6 +86,10 @@ class Order extends Component {
         });
     }
 
+    async submit() {
+        this.props.navigation.navigate('Position');
+    }
+
     render() {
         const submitButtonColor = this.state.buy ? RAISE : FALL;
         return (
@@ -107,7 +111,7 @@ class Order extends Component {
                             fontSize: 20
                         }}
                         >
-                            {this.state.balance}
+                            14833
                         </Text>
                     </View>
 
@@ -129,7 +133,7 @@ class Order extends Component {
                             flex: 1.2
                         }}
                         >
-                            {this.state.contract}
+                            CL1901
                         </Text>
                         <Text style={{
                             marginRight: 8,
@@ -278,7 +282,7 @@ class Order extends Component {
                                 lineHeight: 30
                             }}
                             >
-                                {this.state.stopProfit}
+                                5950
                             </Text>
                         </View>
                     </View>
