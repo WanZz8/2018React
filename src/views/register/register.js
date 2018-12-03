@@ -22,9 +22,18 @@ const IMG = require('../../img/login/logo.png');
 class Register extends Component {
     static navigationOptions = ({ navigation }) => ({
         title: '注册',
-        tabBarIcon: ({ tintColor }) => (
-            <Icons name="md-information-circle" size={25} color={tintColor} />
-        ),
+        headerLeft: (
+            <TouchableOpacity
+                style={{
+                    marginLeft: 5,
+                    width: 20
+                }}
+                onPress={() => {
+                    navigation.goBack();
+                }}
+            >
+                <Icons name="ios-arrow-back" size={25} color="#FFF" />
+            </TouchableOpacity>),
         headerTitleStyle: {
             alignSelf: 'center', fontSize: 18, color: '#fff', fontWeight: 'bold'
         },
