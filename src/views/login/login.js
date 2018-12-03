@@ -118,6 +118,7 @@ class Login extends Component {
                 let body = await res.text();
                 body = JSON.parse(body);
                 this.props.CacheStore.setLogin(this.state.account, this.state.password);
+                this.props.CacheStore.getUserInfo();
                 // this.props.navigation.navigate('Mine');
                 const { goBack, state } = this.props.navigation;
                 console.log(state);

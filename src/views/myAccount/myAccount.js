@@ -135,7 +135,6 @@ class MyAccount extends Component {
                                 fontSize: 18,
                                 color: '#F7C5B6',
                                 fontWeight: 'bold',
-                                lineHeight: 25,
                                 flex: 1
                             }}
                             >
@@ -146,7 +145,6 @@ class MyAccount extends Component {
                             fontSize: 18,
                             color: '#F7C5B6',
                             fontWeight: 'bold',
-                            lineHeight: 25,
                             flex: 2,
                         }}
                         >
@@ -154,7 +152,6 @@ class MyAccount extends Component {
                         </Text>
                         <TouchableOpacity
                             style={{
-                                lineHeight: 25,
                                 borderRadius: 5,
                                 marginRight: 10,
                                 borderWidth: 1,

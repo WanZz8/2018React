@@ -87,7 +87,8 @@ class Register extends Component {
                                     borderWidth: 1,
                                     borderRadius: 30,
                                     height: 55,
-                                    width: '80%'
+                                    width: '80%',
+                                    paddingHorizontal: 10
                                 }}
                                 placeholder="手机号"
                                 // onChangeText={(text) => {
@@ -111,7 +112,8 @@ class Register extends Component {
                                     borderWidth: 1,
                                     borderRadius: 30,
                                     height: 55,
-                                    width: '80%'
+                                    width: '80%',
+                                    paddingHorizontal: 10
                                 }}
                                 placeholder="密码"
                                 // onChangeText={(text) => {
