@@ -215,6 +215,7 @@ class Login extends Component {
                                 // : this.setState({ buttonColor: false });
                                 //     this._address = text;
                                 // }}
+                                autoCapitalize="none"
                                 value={this.state.password}
                                 onChangeText={this.onChangePassword}
                             />
