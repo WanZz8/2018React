@@ -134,7 +134,7 @@ class Controller extends Component {
                                 'white',
                                 '#CD3A3C',
                                 () => {
-                                    //
+                                    this.props.navigation.navigate('Order');
                                 }
                             )}
                             {this.renderFootButton(
