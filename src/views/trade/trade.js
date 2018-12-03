@@ -65,7 +65,8 @@ class TradePage extends Component {
     }
 
     componentDidMount() {
-        this.subscription = DeviceEventEmitter.addListener('KeyBack', (data) => {
+        this.scription = DeviceEventEmitter.addListener('KeyBack', (data) => {
+            console.log(data);
             this.setState({
                 show: data,
             });
@@ -95,7 +96,7 @@ class TradePage extends Component {
     }
 
     componentWillUnmount() {
-        this.subscription.remove();
+        this.scription.remove();
     }
 
     changeType(type) {
@@ -120,9 +121,9 @@ class TradePage extends Component {
 
     refresh() {
         console.log(100);
-        this.setState({
-            show: true
-        });
+        // this.setState({
+        //     show: true
+        // });
     }
 
     renderLoading = () => <LoadingView />;

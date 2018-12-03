@@ -66,6 +66,8 @@ class Controller extends Component {
 
     render() {
         let that = this;
+        console.log(this.state.isLogin);
+        console.log(this.state.status);
         return (
             <View style={ControllerStyles.controllerRoot}>
                 {this.state.isLogin && this.state.status

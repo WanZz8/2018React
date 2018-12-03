@@ -9,7 +9,8 @@ import {
     ActivityIndicator,
     Dimensions,
     Text,
-    StyleSheet
+    StyleSheet,
+    DeviceEventEmitter
 } from 'react-native';
 import JPushModule from 'jpush-react-native';
 import { observer, inject } from 'mobx-react/native';

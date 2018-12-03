@@ -7,7 +7,8 @@ import {
     Image,
     ScrollView,
     Alert,
-    Dimensions
+    Dimensions,
+    DeviceEventEmitter
 } from 'react-native';
 import { observer, inject } from 'mobx-react/native';
 import Icons from 'react-native-vector-icons/Ionicons';
@@ -42,19 +43,39 @@ class MyAccount extends Component {
         this.state = {
             status: true,
             balance: '',
-            account: ''
+            show: false
         };
         this.renderLogin = this.renderLogin.bind(this);
-        console.log(this.props.CacheStore);
     }
 
     componentWillMount() {
-        const { gameBalance, account } = this.props.CacheStore;
+        console.log(this.props);
+        const { gameBalance } = this.props.CacheStore;
+        const { state } = this.props.navigation;
         this.setState({
             balance: gameBalance,
-            account,
-            status: this.props.CacheStore.isLogin
+            status: this.props.CacheStore.isLogin,
+            show: state.params.show
         });
+    }
+
+    componentDidMount() {
+        this.subscription = DeviceEventEmitter.addListener('KeyBack', (data) => {
+            this.setState({
+                show: data,
+            });
+        });
+    }
+
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps);
+        if (nextProps.isLogin !== this.state.isLogin) {
+            //
+        }
+    }
+
+    componentWillUnmount() {
+        this.subscription.remove();
     }
 
     // 点击加币
@@ -79,13 +100,10 @@ class MyAccount extends Component {
     }
 
     renderLogin() {
-        return this.state.status ? (
+        let that = this;
+        return this.state.status && this.state.show ? (
             <View style={{
-                borderColor: '#CD3A3C',
-                width: '88%',
-                height: 48,
-                borderRadius: 6,
-                borderWidth: 1,
+                width,
                 alignItems: 'center',
                 justifyContent: 'space-around'
             }}
@@ -93,7 +111,13 @@ class MyAccount extends Component {
                 <TouchableOpacity
                     onPress={() => this.logout()}
                     style={{
-                        width: '100%'
+                        width: '82%',
+                        borderRadius: 6,
+                        borderWidth: 1,
+                        height: 48,
+                        borderColor: '#CD3A3C',
+                        alignItems: 'center',
+                        justifyContent: 'space-around'
                     }}
                 >
                     <Text style={{ fontSize: 17, color: '#CD3A3C', alignSelf: 'center' }}>退出</Text>
@@ -120,7 +144,13 @@ class MyAccount extends Component {
                     }}
                     onPress={() => {
                         this.props.navigation.navigate(
-                            'Login'
+                            'Login', {
+                                refresh() {
+                                    that.setState({
+                                        status: true
+                                    });
+                                }
+                            }
                         );
                     }}
                 >
@@ -197,7 +227,7 @@ class MyAccount extends Component {
                             flex: 2,
                         }}
                         >
-                            {this.state.status ? this.state.balance : 0}
+                            {this.state.status && this.state.show ? this.state.balance : 0}
                             币
                         </Text>
                         <TouchableOpacity

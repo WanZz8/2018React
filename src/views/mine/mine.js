@@ -491,7 +491,7 @@ class Mine extends Component {
                                 () => {
                                     this.props.CacheStore.isLogin && this.state.show
                                         ? this.props.navigation.navigate(
-                                            'MyAccount'
+                                            'MyAccount', { show: this.state.show }
                                         ) : Alert.alert('提示', '请先登录', [
                                             {
                                                 text: '确定',
