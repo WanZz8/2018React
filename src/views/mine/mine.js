@@ -14,6 +14,7 @@ import {
 import { observer, inject } from 'mobx-react/native';
 import Icons from 'react-native-vector-icons/Ionicons';
 import SafeBody from '../../common/safeView';
+import { CHART_URL } from '../../config/baseConfig';
 
 const width = Dimensions.get('window').width; // 全屏宽高
 const height = Dimensions.get('window').height; // 全屏宽高
@@ -26,9 +27,11 @@ const IMG = {
     changePwd: require('../../img/mine/changePwd.png'),
     account: require('../../img/mine/account.png'),
     setting: require('../../img/mine/setting.png'),
-    coin: require('../../img/mine/coinAdd.png')
+    coin: require('../../img/mine/coinAdd.png'),
+    person: require('../../img/mine/boy.png')
 };
 
+@inject('CacheStore')
 class Mine extends Component {
     static navigationOptions = {
         header: null
@@ -36,10 +39,17 @@ class Mine extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            status: false
+        };
     }
 
+    // componentWillReceiveProps(nextProps) {
+    //     console.log(nextProps);
+    // }
+
     render() {
+        let that = this;
         return (
             <SafeBody style={MineStyles.root} color="#F8F7F4">
                 <ScrollView contentContainerStyle={{
@@ -60,9 +70,17 @@ class Mine extends Component {
                                 style={MineStyles.viewImg}
                                 onPress={
                                     () => {
-                                        this.props.navigation.navigate(
-                                            'Login'
-                                        );
+                                        this.props.CacheStore.isLogin && this.state.status
+                                            ? ''
+                                            : this.props.navigation.navigate(
+                                                'Login', {
+                                                    refresh() {
+                                                        that.setState({
+                                                            status: true
+                                                        });
+                                                    }
+                                                }
+                                            );
                                     }}
                             >
                                 <View style={{
@@ -75,7 +93,17 @@ class Mine extends Component {
                                     justifyContent: 'space-around'
                                 }}
                                 >
-                                    <Icons name="ios-person" size={40} color="#fff" />
+                                    {
+                                        this.props.CacheStore.isLogin && this.state.status ? (
+                                            <Image
+                                                source={IMG.person}
+                                                style={{
+                                                    width: 65,
+                                                    height: 65
+                                                }}
+                                            />
+                                        ) : <Icons name="ios-person" size={40} color="#fff" />
+                                    }
                                 </View>
                                 <View style={{
                                     flex: 1,
@@ -83,22 +111,39 @@ class Mine extends Component {
                                     // justifyContent: 'space-around'
                                 }}
                                 >
-                                    <Text style={{
-                                        marginTop: 10,
-                                        color: '#f3f3f3',
-                                        fontSize: 15
-                                    }}
-                                    >
-                                        未登录
-                                    </Text>
-                                    <Text style={{
-                                        marginTop: 5,
-                                        color: '#f3f3f3',
-                                        fontSize: 15
-                                    }}
-                                    >
-                                        点击头像登录或者注册
-                                    </Text>
+                                    {
+                                        this.props.CacheStore.isLogin && this.state.status ? (
+                                            <Text style={{
+                                                marginTop: 15,
+                                                color: '#f3f3f3',
+                                                fontSize: 15
+                                            }}
+                                            >
+                                            欢迎回来
+                                            </Text>
+                                        ) : [
+                                            <Text
+                                                style={{
+                                                    marginTop: 10,
+                                                    color: '#f3f3f3',
+                                                    fontSize: 15
+                                                }}
+                                                key="ss11"
+                                            >
+                                                    未登录
+                                            </Text>,
+                                            <Text
+                                                style={{
+                                                    marginTop: 5,
+                                                    color: '#f3f3f3',
+                                                    fontSize: 15
+                                                }}
+                                                key="ss12"
+                                            >
+                                                点击头像登录或者注册
+                                            </Text>
+                                        ]
+                                    }
                                 </View>
                             </TouchableOpacity>
                         </ImageBackground>

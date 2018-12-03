@@ -12,7 +12,7 @@ import {
     StyleSheet
 } from 'react-native';
 import JPushModule from 'jpush-react-native';
-import { observer, inject } from 'mobx-react';
+import { observer, inject } from 'mobx-react/native';
 import codePush from 'react-native-code-push';
 // import { NavigationActions, } from 'react-navigation';
 // import { Toast } from 'teaset';
