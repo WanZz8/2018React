@@ -25,6 +25,7 @@ const width = Dimensions.get('window').width; // 全屏宽高
 const height = Dimensions.get('window').height; // 全屏宽高
 const IMG = require('../../img/mine/lock.png');
 
+@inject('CacheStore')
 class Register extends Component {
     static navigationOptions = ({ navigation }) => ({
         title: '注册',
@@ -192,7 +193,7 @@ class Register extends Component {
                 });
             }
             this.props.navigation.navigate('Home');
-            // Cache.setLogin(this.state.name, this.state.password);
+            this.props.CacheStore.setLogin(this.state.name, this.state.password);
         } catch (err) {
             Alert.alert('提示', err.errorMsg);
         }
