@@ -21,10 +21,19 @@ const IMG = require('../../img/login/logo.png');
 
 class ChangePassword extends Component {
     static navigationOptions =({ navigation }) => ({
-        title: '登录密码',
-        tabBarIcon: ({ tintColor }) => (
-            <Icons name="md-information-circle" size={25} color={tintColor} />
-        ),
+        title: '修改密码',
+        headerLeft: (
+            <TouchableOpacity
+                onPress={() => {
+                    navigation.goBack();
+                }}
+                style={{
+                    marginLeft: 5,
+                    width: 20
+                }}
+            >
+                <Icons name="ios-arrow-back" size={25} color="#FFF" />
+            </TouchableOpacity>),
         headerTitleStyle: {
             alignSelf: 'center', fontSize: 18, color: '#fff', fontWeight: 'bold'
         },
@@ -83,7 +92,8 @@ class ChangePassword extends Component {
                                     borderWidth: 1,
                                     borderRadius: 30,
                                     height: 55,
-                                    width: '80%'
+                                    width: '80%',
+                                    paddingHorizontal: 10
                                 }}
                                 placeholder="旧密码"
                                 // onChangeText={(text) => {
@@ -107,7 +117,8 @@ class ChangePassword extends Component {
                                     borderWidth: 1,
                                     borderRadius: 30,
                                     height: 55,
-                                    width: '80%'
+                                    width: '80%',
+                                    paddingHorizontal: 10
                                 }}
                                 placeholder="新密码"
                                 // onChangeText={(text) => {
@@ -131,7 +142,8 @@ class ChangePassword extends Component {
                                     borderWidth: 1,
                                     borderRadius: 30,
                                     height: 55,
-                                    width: '80%'
+                                    width: '80%',
+                                    paddingHorizontal: 10
                                 }}
                                 placeholder="确认密码"
                                 // onChangeText={(text) => {

@@ -23,9 +23,18 @@ const height = Dimensions.get('window').height;
 class Share extends Component {
     static navigationOptions = ({ navigation }) => ({
         title: '推荐好友',
-        tabBarIcon: ({ tintColor }) => (
-            <Icons name="md-information-circle" size={25} color={tintColor} />
-        ),
+        headerLeft: (
+            <TouchableOpacity
+                onPress={() => {
+                    navigation.goBack();
+                }}
+                style={{
+                    marginLeft: 5,
+                    width: 20
+                }}
+            >
+                <Icons name="ios-arrow-back" size={25} color="#FFF" />
+            </TouchableOpacity>),
         headerTitleStyle: {
             alignSelf: 'center', fontSize: 18, color: '#fff', fontWeight: 'bold'
         },

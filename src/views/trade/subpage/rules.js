@@ -23,9 +23,18 @@ const height = Dimensions.get('window').height; // 全屏宽高
 class Rules extends Component {
     static navigationOptions = ({ navigation }) => ({
         title: '交易规则',
-        tabBarIcon: ({ tintColor }) => (
-            <Icons name="md-information-circle" size={25} color={tintColor} />
-        ),
+        headerLeft: (
+            <TouchableOpacity
+                onPress={() => {
+                    navigation.goBack();
+                }}
+                style={{
+                    marginLeft: 5,
+                    width: 20
+                }}
+            >
+                <Icons name="ios-arrow-back" size={25} color="#FFF" />
+            </TouchableOpacity>),
         headerTitleStyle: {
             alignSelf: 'center', fontSize: 18, color: '#fff', fontWeight: 'bold'
         },

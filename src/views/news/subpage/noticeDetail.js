@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    WebView, View, StyleSheet, Dimensions
+    WebView, View, StyleSheet, Dimensions, TouchableOpacity
 } from 'react-native';
 import Icons from 'react-native-vector-icons/Ionicons';
 import { SCREEN_WIDTH, HOST, QUOTE } from '../../../config/baseConfig';
@@ -12,9 +12,18 @@ const height = Dimensions.get('window').height; // 全屏宽高
 class NoticeDetails extends Component {
     static navigationOptions =({ navigation }) => ({
         title: '资讯详情',
-        tabBarIcon: ({ tintColor }) => (
-            <Icons name="md-information-circle" size={25} color={tintColor} />
-        ),
+        headerLeft: (
+            <TouchableOpacity
+                onPress={() => {
+                    navigation.goBack();
+                }}
+                style={{
+                    marginLeft: 5,
+                    width: 20
+                }}
+            >
+                <Icons name="ios-arrow-back" size={25} color="#FFF" />
+            </TouchableOpacity>),
         headerTitleStyle: {
             alignSelf: 'center', fontSize: 18, color: '#fff', fontWeight: 'bold'
         },
