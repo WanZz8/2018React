@@ -21,7 +21,7 @@ import {
 
 const width = Dimensions.get('window').width; // 全屏宽高
 const height = Dimensions.get('window').height; // 全屏宽高
-const IMG = require('../../img/login/logo.png');
+const IMG = require('../../img/mine/lock.png');
 
 @inject('CacheStore')
 class Login extends Component {

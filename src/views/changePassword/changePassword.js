@@ -17,7 +17,7 @@ import Icons from 'react-native-vector-icons/Ionicons';
 
 const width = Dimensions.get('window').width; // 全屏宽高
 const height = Dimensions.get('window').height; // 全屏宽高
-const IMG = require('../../img/login/logo.png');
+const IMG = require('../../img/mine/lock.png');
 
 class ChangePassword extends Component {
     static navigationOptions =({ navigation }) => ({
