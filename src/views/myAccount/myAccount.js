@@ -40,13 +40,45 @@ class MyAccount extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            status: true
+            status: true,
+            balance: '',
+            account: ''
         };
         this.renderLogin = this.renderLogin.bind(this);
+        console.log(this.props.CacheStore);
+    }
+
+    componentWillMount() {
+        const { gameBalance, account } = this.props.CacheStore;
+        this.setState({
+            balance: gameBalance,
+            account,
+            status: this.props.CacheStore.isLogin
+        });
     }
 
     renderLogin() {
         return this.state.status ? (
+            <View style={{
+                borderColor: '#CD3A3C',
+                width: '88%',
+                height: 48,
+                borderRadius: 6,
+                borderWidth: 1,
+                alignItems: 'center',
+                justifyContent: 'space-around'
+            }}
+            >
+                <TouchableOpacity
+                    onPress={() => {}}
+                    style={{
+                        width: '100%'
+                    }}
+                >
+                    <Text style={{ fontSize: 17, color: '#CD3A3C', alignSelf: 'center' }}>退出</Text>
+                </TouchableOpacity>
+            </View>
+        ) : (
             <View style={{
                 justifyContent: 'space-around',
                 alignItems: 'center',
@@ -90,12 +122,6 @@ class MyAccount extends Component {
                     }}
                 >
                     <Text style={{ fontSize: 17, color: '#CD3A3C' }}>注册</Text>
-                </TouchableOpacity>
-            </View>
-        ) : (
-            <View>
-                <TouchableOpacity onPress={() => {}}>
-                    <Text style={{ fontSize: 17, color: '#CD3A3C', alignSelf: 'center' }}>退出</Text>
                 </TouchableOpacity>
             </View>
         );
@@ -150,7 +176,8 @@ class MyAccount extends Component {
                             flex: 2,
                         }}
                         >
-                            011111111币
+                            {this.state.balance}
+                            币
                         </Text>
                         <TouchableOpacity
                             style={{
