@@ -10,7 +10,8 @@ import {
     TouchableHighlight,
     StyleSheet,
     Dimensions,
-    WebView
+    WebView,
+    DeviceEventEmitter
 } from 'react-native';
 import { observer, inject } from 'mobx-react/native';
 import Icons from 'react-native-vector-icons/Ionicons';
@@ -64,7 +65,11 @@ class TradePage extends Component {
     }
 
     componentDidMount() {
-    //     console.log(this.props);
+        this.subscription = DeviceEventEmitter.addListener('KeyBack', (data) => {
+            this.setState({
+                show: data,
+            });
+        });
     }
 
     componentWillReceiveProps(nextProps) {
@@ -87,6 +92,10 @@ class TradePage extends Component {
         if (this.state.url !== prevState.url) {
             this.renderWebview();
         }
+    }
+
+    componentWillUnmount() {
+        this.subscription.remove();
     }
 
     changeType(type) {

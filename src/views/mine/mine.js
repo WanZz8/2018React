@@ -9,7 +9,9 @@ import {
     Dimensions,
     StatusBar,
     ImageBackground,
-    Image
+    Image,
+    AsyncStorage,
+    DeviceEventEmitter
 } from 'react-native';
 import { observer, inject } from 'mobx-react/native';
 import Icons from 'react-native-vector-icons/Ionicons';
@@ -40,13 +42,31 @@ class Mine extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            status: false
+            status: false,
+            isLogin: false,
+            show: false
         };
     }
 
+    componentDidMount() {
+        this.subscription = DeviceEventEmitter.addListener('KeyBack', (data) => {
+            this.setState({
+                show: data,
+            });
+        });
+    }
+
+
     // componentWillReceiveProps(nextProps) {
     //     console.log(nextProps);
+    //     if (nextProps.isLogin !== this.state.isLogin) {
+    //         //
+    //     }
     // }
+
+    componentWillUnmount() {
+        this.subscription.remove();
+    }
 
     render() {
         let that = this;
@@ -70,7 +90,7 @@ class Mine extends Component {
                                 style={MineStyles.viewImg}
                                 onPress={
                                     () => {
-                                        this.props.CacheStore.isLogin && this.state.status
+                                        this.props.CacheStore.isLogin && this.state.show
                                             ? ''
                                             : this.props.navigation.navigate(
                                                 'Login', {
@@ -94,7 +114,7 @@ class Mine extends Component {
                                 }}
                                 >
                                     {
-                                        this.props.CacheStore.isLogin && this.state.status ? (
+                                        this.props.CacheStore.isLogin && this.state.show ? (
                                             <Image
                                                 source={IMG.person}
                                                 style={{
@@ -112,7 +132,7 @@ class Mine extends Component {
                                 }}
                                 >
                                     {
-                                        this.props.CacheStore.isLogin && this.state.status ? (
+                                        this.props.CacheStore.isLogin && this.state.show ? (
                                             <Text style={{
                                                 marginTop: 15,
                                                 color: '#f3f3f3',
@@ -469,7 +489,7 @@ class Mine extends Component {
                         <TouchableOpacity
                             onPress={
                                 () => {
-                                    this.props.CacheStore.isLogin && this.state.status
+                                    this.props.CacheStore.isLogin && this.state.show
                                         ? this.props.navigation.navigate(
                                             'MyAccount'
                                         ) : Alert.alert('提示', '请先登录', [

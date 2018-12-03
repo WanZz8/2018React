@@ -10,7 +10,8 @@ import {
     StatusBar,
     ImageBackground,
     Image,
-    TextInput
+    TextInput,
+    DeviceEventEmitter
 } from 'react-native';
 import { observer, inject } from 'mobx-react/native';
 import Icons from 'react-native-vector-icons/Ionicons';
@@ -119,10 +120,9 @@ class Login extends Component {
                 body = JSON.parse(body);
                 this.props.CacheStore.setLogin(this.state.account, this.state.password);
                 this.props.CacheStore.getUserInfo();
-                // this.props.navigation.navigate('Mine');
                 const { goBack, state } = this.props.navigation;
-                console.log(state);
                 state.params.refresh();
+                DeviceEventEmitter.emit('KeyBack', true);
                 goBack();
             }
         } else if (!this.state.account) {

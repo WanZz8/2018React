@@ -8,7 +8,7 @@ import {
     Image,
     Alert,
     Platform,
-    AsyncStorage,
+    DeviceEventEmitter,
     Dimensions
 } from 'react-native';
 import Icons from 'react-native-vector-icons/Ionicons';
@@ -24,25 +24,17 @@ class Controller extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            fastTrade: false,
             balance: 0,
             isLogin: '',
             status: false,
-            buyPrice: 0,
-            buyVolume: 0,
-            buyWidth: 1,
-            sellPrice: 0,
-            sellVolume: 0,
-            sellWidth: 1,
             active: false
         };
     }
 
     componentWillMount() {
-        const { gameBalance, account } = this.props.CacheStore;
-        console.log(this.props);
+        const { account } = this.props.CacheStore;
         this.setState({
-            balance: gameBalance,
+            balance: this.props.CacheStore.GameBalance,
             account,
             isLogin: this.props.CacheStore.isLogin
         });
@@ -56,22 +48,18 @@ class Controller extends Component {
     }
 
 
-    componentDidMount() {
-        //
-    }
-
-
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps);
-        if (nextProps.status !== this.state.status) {
+        if (nextProps.status !== this.state.status || nextProps.balance !== this.state.balance) {
             this.setState({
-                status: nextProps.status
+                status: nextProps.status,
+                isLogin: nextProps.CacheStore.isLogin,
+                balance: nextProps.CacheStore.GameBalance,
             });
         }
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (this.state.status !== prevState.status) {
+        if (this.state.status !== prevState.status || this.state.balance !== prevState.balance) {
             this.render();
         }
     }
@@ -112,7 +100,9 @@ class Controller extends Component {
                                     marginRight: 10
                                 }}
                                 >
-                                    {this.state.isLogin ? this.state.gameBalance : this.state.balance}
+                                    {this.state.isLogin && this.state.status
+                                        ? this.state.balance
+                                        : 0}
                                     币
                                 </Text>
                                 <TouchableOpacity onPress={() => {

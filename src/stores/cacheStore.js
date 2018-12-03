@@ -1,4 +1,4 @@
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage, Alert } from 'react-native';
 import { observable, action, computed } from 'mobx';
 import JPushModule from 'jpush-react-native';
 import { POST, GET } from '../utils/request';
@@ -11,7 +11,7 @@ class CacheStore {
     // 0-未登录,1-已登录
     @observable status = false;
 
-    @observable gameBalance = 0;
+    @observable gameBalance = 14883;
 
     @observable jpush = '';
 
@@ -33,6 +33,10 @@ class CacheStore {
         return this.status;
     }
 
+    @computed get GameBalance() {
+        return this.gameBalance;
+    }
+
     @action
     async init() {
         this.jpush = await AsyncStorage.getItem('jpush');
@@ -43,7 +47,6 @@ class CacheStore {
                 AsyncStorage.setItem('jpush', registrationId);
             });
         }
-        this.getUserInfo();
 
         this.getBank();
 
@@ -54,7 +57,7 @@ class CacheStore {
         console.log(password);
 
         if (!account || !password) { throw ''; }
-
+        this.getUserInfo();
         this.account = account;
         this.password = password;
 
@@ -73,22 +76,29 @@ class CacheStore {
 
     @action
     async getUserInfo() {
-        console.log(2);
-        await GET(`${HOST}/mine/index.htm`).then((data) => {
-            console.log(data);
-            this.username = data.user.username;
-            this.userId = data.user.id;
-            this.realBalance = data.asset.money;
-            this.gameBalance = data.asset.game;
-            this.hello = data.hello;
-        });
+        let result = await GET(`${HOST}/mine/index.htm`);
+        this.setRes(result);
+    }
+
+    @action
+    setRes(res) {
+        console.log(res);
+        if (res && res.code === 200) {
+            if (res && res.user && res.asset) {
+                this.username = res.user.username;
+                this.userId = res.user.id;
+                this.realBalance = res.asset.money;
+                this.gameBalance = res.asset.game;
+                this.hello = res.hello;
+            }
+        }
     }
 
     @action
     async getBank() {
-        console.log(3);
+        // console.log(3);
         await GET(`${HOST}/mine/profile.htm`).then((data) => {
-            console.log(data);
+            // console.log(data);
             this.bankCardCount = data.bankCardCount;
             this.realName = data.info.name;
             this.phone = data.info.mobile;
