@@ -148,6 +148,11 @@ class CacheStore {
         //     method: 'POST'
         // });
     }
+
+    @action
+    addSimBalance() {
+        return GET(`${HOST}/trade/addScore.htm`);
+    }
 }
 
 const cacheStore = new CacheStore();

@@ -57,6 +57,27 @@ class MyAccount extends Component {
         });
     }
 
+    // 点击加币
+    async addSimBalance() {
+        this.props.CacheStore.addSimBalance().then((res) => {
+            Alert.alert('提示', res.resultMsg);
+        });
+    }
+
+    // todo 退出
+    logout() {
+        Alert.alert('警告', '是否退出账号？', [
+            { text: '取消', style: 'cancel' },
+            {
+                text: '确定',
+                onPress: () => {
+                    this.props.CacheStore.setLogout();
+                    this.setState({ status: this.props.CacheStore.isLogin });
+                }
+            }
+        ]);
+    }
+
     renderLogin() {
         return this.state.status ? (
             <View style={{
@@ -70,7 +91,7 @@ class MyAccount extends Component {
             }}
             >
                 <TouchableOpacity
-                    onPress={() => {}}
+                    onPress={() => this.logout()}
                     style={{
                         width: '100%'
                     }}
@@ -176,7 +197,7 @@ class MyAccount extends Component {
                             flex: 2,
                         }}
                         >
-                            {this.state.balance}
+                            {this.state.status ? this.state.balance : 0}
                             币
                         </Text>
                         <TouchableOpacity
@@ -185,6 +206,9 @@ class MyAccount extends Component {
                                 marginRight: 10,
                                 borderWidth: 1,
                                 borderColor: '#F7C5B6',
+                            }}
+                            onPress={() => {
+                                this.addSimBalance();
                             }}
                         >
                             <Text style={{

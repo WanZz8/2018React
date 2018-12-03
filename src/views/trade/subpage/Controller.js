@@ -8,21 +8,26 @@ import {
     Image,
     Alert,
     Platform,
-    AsyncStorage, Dimensions
+    AsyncStorage,
+    Dimensions
 } from 'react-native';
 import Icons from 'react-native-vector-icons/Ionicons';
+import { inject } from 'mobx-react/native';
+import { CHART_URL } from '../../../config/baseConfig';
 
 const width = Dimensions.get('window').width; // 全屏宽高
 const height = Dimensions.get('window').height; // 全屏宽高
-const addImg = require('../../images/trade/addImg.png');
+const addImg = require('../../../img/trade/addImg.png');
 
+@inject('CacheStore')
 class Controller extends Component {
     constructor(props) {
         super(props);
         this.state = {
             fastTrade: false,
-            balance: Cache.gameBalance,
-            isLogin: null,
+            balance: 0,
+            isLogin: '',
+            status: false,
             buyPrice: 0,
             buyVolume: 0,
             buyWidth: 1,
@@ -33,53 +38,60 @@ class Controller extends Component {
         };
     }
 
-    getInfoCallback() {
+    componentWillMount() {
+        const { gameBalance, account } = this.props.CacheStore;
+        console.log(this.props);
         this.setState({
-            balance: Cache.gameBalance
+            balance: gameBalance,
+            account,
+            isLogin: this.props.CacheStore.isLogin
         });
-    }
-
-    loginCallback() {
-        console.log(Cache);
-        this.setState({
-            isLogin: Cache.isLogin()
-        });
-        this.getInfoCallback();
     }
 
     // 点击加币
     async addSimBalance() {
-        try {
-            const result = await req({
-                url: '/trade/addScore.htm',
-                animate: true
-            });
-            Cache.getUserInfo();
-            Alert.alert(lang('Reminder'), result.resultMsg);
-        } catch (err) {
-            Alert.alert(lang('Reminder'), err.resultMsg);
-        }
+        this.props.CacheStore.addSimBalance().then((res) => {
+            Alert.alert('提示', res.resultMsg);
+        });
     }
 
-    componentWillMount() {}
 
     componentDidMount() {
         //
     }
 
+
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps);
+        if (nextProps.status !== this.state.status) {
+            this.setState({
+                status: nextProps.status
+            });
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (this.state.status !== prevState.status) {
+            this.render();
+        }
+    }
+
     render() {
+        let that = this;
         return (
             <View style={ControllerStyles.controllerRoot}>
-                {Cache.isLogin()
+                {this.state.isLogin && this.state.status
                     ? [
-                        <View style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-around',
-                            alignItems: 'center',
-                            width,
-                            top: 10,
-                            left: 5
-                        }}
+                        <View
+                            style={{
+                                flexDirection: 'row',
+                                justifyContent: 'space-around',
+                                alignItems: 'center',
+                                width,
+                                top: 10,
+                                left: 5
+                            }}
+                            key="a1"
                         >
                             <Text style={{
                                 flex: 1.5,
@@ -100,7 +112,7 @@ class Controller extends Component {
                                     marginRight: 10
                                 }}
                                 >
-                                    {Cache.isLogin() ? Cache.gameBalance : this.state.balance}
+                                    {this.state.isLogin ? this.state.gameBalance : this.state.balance}
                                     币
                                 </Text>
                                 <TouchableOpacity onPress={() => {
@@ -121,21 +133,24 @@ class Controller extends Component {
                             }}
                             />
                         </View>,
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+                        <View
+                            style={{ flexDirection: 'row', justifyContent: 'space-around' }}
+                            key="a2"
+                        >
                             {this.renderFootButton(
                                 '常规下单',
                                 'white',
                                 '#CD3A3C',
-                                () => this.props.onPress(true)
+                                () => {
+                                    //
+                                }
                             )}
                             {this.renderFootButton(
-                                '添加自选',
+                                '我的持仓',
                                 'white',
                                 this.state.active ? '#C7C7CC' : '#CD3A3C',
                                 () => {
-                                    if (Cache.isLogin()) {
-                                        this.chooseStar(this.props.contract);
-                                    }
+                                    //
                                 }
                             )}
                         </View>]
@@ -152,7 +167,12 @@ class Controller extends Component {
                                 }}
                                 onPress={() => {
                                     this.props.navigation.navigate(
-                                        'Login'
+                                        'Login',
+                                        {
+                                            refresh() {
+                                                that.props.refresh();
+                                            }
+                                        }
                                     );
                                 }}
                             >
@@ -317,5 +337,13 @@ const ControllerStyles = StyleSheet.create({
     },
     oneKeyTopupText: {
         color: '#000'
+    },
+    controContainer: {
+        width,
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        flexDirection: 'row',
+        backgroundColor: '#FFF',
+        flex: 1
     }
 });

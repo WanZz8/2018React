@@ -18,6 +18,7 @@ import WKWebView from 'react-native-wkwebview-reborn';
 import { formatDate } from '../../utils/tool';
 import Header from './subpage/header';
 import SafeBody from '../../common/safeView';
+import Controller from './subpage/Controller';
 import LoadingView from '../../common/LoadingView';
 import { CHART_URL } from '../../config/baseConfig';
 
@@ -108,6 +109,13 @@ class TradePage extends Component {
         }
     }
 
+    refresh() {
+        console.log(100);
+        this.setState({
+            show: true
+        });
+    }
+
     renderLoading = () => <LoadingView />;
 
     renderWebview() {
@@ -147,7 +155,6 @@ class TradePage extends Component {
 
     render() {
         let date = new Date().getTime();
-        console.log(date);
         return (
             <SafeBody style={TradeStyles.root}>
                 <Header
@@ -305,55 +312,11 @@ class TradePage extends Component {
                         休市
                     </Text>
                 </View>
-                <View style={TradeStyles.controContainer}>
-                    <TouchableOpacity
-                        style={{
-                            width: 105,
-                            height: 33,
-                            backgroundColor: '#333',
-                            borderRadius: 4,
-                            alignItems: 'center',
-                            justifyContent: 'space-around'
-                        }}
-                        onPress={() => {
-                            this.props.navigation.navigate(
-                                'Login'
-                            );
-                        }}
-                    >
-                        <Text style={{
-                            fontSize: 17,
-                            color: '#fff',
-                            fontWeight: 'bold'
-                        }}
-                        >
-                            登录
-                        </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={{
-                            width: 105,
-                            height: 33,
-                            borderRadius: 4,
-                            borderWidth: 1,
-                            alignItems: 'center',
-                            justifyContent: 'space-around'
-                        }}
-                        onPress={() => {
-                            this.props.navigation.navigate(
-                                'Register'
-                            );
-                        }}
-                    >
-                        <Text style={{
-                            fontSize: 17,
-                            fontWeight: 'bold'
-                        }}
-                        >
-                            注册
-                        </Text>
-                    </TouchableOpacity>
-                </View>
+                <Controller
+                    navigation={this.props.navigation}
+                    refresh={() => { this.refresh(); }}
+                    status={this.state.show}
+                />
             </SafeBody>
         );
     }

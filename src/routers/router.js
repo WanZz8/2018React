@@ -11,6 +11,7 @@ import Server from '../views/server/server'; // 在线客服
 
 import TradePage from '../views/trade/trade';
 import Rules from '../views/trade/subpage/rules';
+import Order from '../views/order/order';
 
 import Find from '../views/find/find';
 
@@ -119,6 +120,7 @@ const RootNavigator = StackNavigator(
         NoticeDetails: { screen: NoticeDetails },
         Sort: { screen: Sort },
         Share: { screen: Share },
+        Order: { screen: Order },
         Server: { screen: Server },
         Login: { screen: Login },
         Register: { screen: Register },
