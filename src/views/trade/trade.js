@@ -165,6 +165,7 @@ class TradePage extends Component {
 
     render() {
         let date = new Date().getTime();
+        console.log(1);
         return (
             <SafeBody style={TradeStyles.root}>
                 <Header
