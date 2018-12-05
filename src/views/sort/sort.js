@@ -7,7 +7,7 @@ import {
     Text,
     StyleSheet,
     Image,
-    Dimensions
+    Dimensions, Platform
 } from 'react-native';
 import { observer, inject } from 'mobx-react/native';
 import Icons from 'react-native-vector-icons/Ionicons';
@@ -18,6 +18,21 @@ const hot = require('../../img/home/hot.png');
 
 const RAISE = '#E84209';
 const FALL = '#009900';
+
+const X_WIDTH = 375;
+const X_HEIGHT = 812;
+
+function isIphoneX() {
+    return (
+        (Platform.OS === 'ios'
+            && ((height === X_HEIGHT
+                && width === X_WIDTH)
+                || (height === X_WIDTH
+                    && width === X_HEIGHT)))
+        || Platform.OS === 'android'
+    );
+}
+
 
 @inject('MainStore')
 @observer
@@ -36,10 +51,30 @@ class Sort extends Component {
             >
                 <Icons name="ios-arrow-back" size={25} color="#FFF" />
             </TouchableOpacity>),
+        headerRight: (
+            <View>
+                <Text style={{
+                    fontSize: 18,
+                    color: '#fff',
+                    fontWeight: 'bold',
+                    marginRight: 10
+                }}
+                />
+            </View>),
         headerTitleStyle: {
-            alignSelf: 'center', fontSize: 18, color: '#fff', fontWeight: 'bold'
+            alignSelf: 'center',
+            flex: 1,
+            textAlign: 'center',
+            fontSize: 18,
+            color: '#fff',
+            fontWeight: 'bold'
         },
-        headerStyle: { height: 35, backgroundColor: '#292929' },
+        headerStyle: {
+            height: isIphoneX() ? 65 : 45,
+            backgroundColor: '#292929',
+            paddingTop: isIphoneX() ? 20 : 0,
+            elevation: 0,
+        },
     });
 
     constructor(props) {
@@ -71,11 +106,357 @@ class Sort extends Component {
         this.setState({ isRest: true });
     }
 
-    render() {
+    renderTade() {
         let idx1 = 0;
         let idx2 = 0;
         let idx3 = 0;
+        const content = this.state.arr.map((item, idx) => {
+            const priceColor = item.isUp
+                ? RAISE
+                : FALL;
+            if (item.isOpen && item.isUp && this.state.isUp && !this.state.isRest) {
+                idx1 += 1;
+                return (
+                    <TouchableOpacity
+                        key={idx}
+                        style={[SortStyles.positionContainer,
+                            idx1 % 2 === 0
+                                ? { backgroundColor: '#fff' }
+                                : { backgroundColor: '#F8F7F4' }]}
+                    >
+                        <View style={[{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            justifyContent: 'space-around',
+                            height: 50,
+                            flex: 1.3
+                        }]}
+                        >
+                            <Text style={{
+                                flex: 1,
+                                color: '#000',
+                                textAlign: 'center',
+                                fontSize: 16,
+                                // fontWeight: 'bold'
+                            }}
+                            >
+                                {idx1}
+                            </Text>
+                            <Text style={{
+                                flex: 4,
+                                color: '#000',
+                                fontSize: 14,
+                                textAlign: 'left',
+                                fontWeight: 'bold'
+                            }}
+                            >
+                                {item.name}
+                            </Text>
+                            {this.props.MainStore.isHot(item.code) ? (
+                                <View style={{ flex: 1 }}>
+                                    <Image
+                                        source={hot}
+                                        style={{
+                                            width: 12,
+                                            height: 13,
+                                        }}
+                                    />
+                                </View>
+                            ) : []}
+                            {this.props.MainStore.isNew(item.code) ? (
+                                <View style={{
+                                    // flex: 2
+                                    left: 5,
+                                    width: 50,
+                                    backgroundColor: '#00b38f',
+                                    alignItems: 'center',
+                                    borderRadius: 3
+                                }}
+                                >
+                                    <Text style={{
+                                        // flex: 2
+                                        color: '#fff'
+                                    }}
+                                    >
+                             NEW
+                                    </Text>
+                                </View>
+                            ) : []}
+                        </View>
+                        <View style={{
+                            flex: 2
+                        }}
+                        >
+                            <Text style={{
+                                textAlign: 'center',
+                                color: priceColor,
+                                fontSize: 17,
+                                fontWeight: 'bold'
+                            }}
+                            >
+                                {item.price}
+                            </Text>
+                        </View>
+                        <View style={{
+                            flex: 1,
+                            alignItems: 'center',
+                            justifyContent: 'space-around'
+                        }}
+                        >
+                            <View style={{
+                                backgroundColor: item.isUp ? '#E13628' : '#00b38f',
+                                width: '80%',
+                                borderWidth: 1,
+                                borderRadius: 4,
+                                borderColor: item.isUp ? RAISE : FALL,
+                            }}
+                            >
+                                <Text style={{
+                                    textAlign: 'center',
+                                    color: '#fff',
+                                    fontSize: 18,
+                                    fontWeight: 'bold',
+                                    height: 30,
+                                    lineHeight: 30,
+                                }}
+                                >
+                                    {item.rate}
+                                </Text>
+                            </View>
+                        </View>
+                    </TouchableOpacity>
+                );
+            } if (item.isOpen && !item.isUp && !this.state.isUp && !this.state.isRest) {
+                idx3 += 1;
+                return (
+                    <TouchableOpacity
+                        key={idx}
+                        style={[SortStyles.positionContainer,
+                            idx3 % 2 === 0
+                                ? { backgroundColor: '#fff' }
+                                : { backgroundColor: '#F8F7F4' }]}
+                    >
+                        <View style={[{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            justifyContent: 'space-around',
+                            height: 50,
+                            flex: 1.3
+                        }]}
+                        >
+                            <Text style={{
+                                flex: 1,
+                                color: '#000',
+                                textAlign: 'center',
+                                fontSize: 16,
+                                // fontWeight: 'bold'
+                            }}
+                            >
+                                {idx3}
+                            </Text>
+                            <Text style={{
+                                flex: 4,
+                                color: '#000',
+                                fontSize: 14,
+                                textAlign: 'left',
+                                fontWeight: 'bold'
+                            }}
+                            >
+                                {item.name}
+                            </Text>
+                            {this.props.MainStore.isHot(item.code) ? (
+                                <View style={{ flex: 1 }}>
+                                    <Image
+                                        source={hot}
+                                        style={{
+                                            width: 12,
+                                            height: 13,
+                                        }}
+                                    />
+                                </View>
+                            ) : []}
+                            {this.props.MainStore.isNew(item.code) ? (
+                                <View style={{
+                                    // flex: 2
+                                    left: 5,
+                                    width: 50,
+                                    backgroundColor: '#00b38f',
+                                    alignItems: 'center',
+                                    borderRadius: 3
+                                }}
+                                >
+                                    <Text style={{
+                                        // flex: 2
+                                        color: '#fff'
+                                    }}
+                                    >
+                             NEW
+                                    </Text>
+                                </View>
+                            ) : []}
+                        </View>
+                        <View style={{
+                            flex: 2
+                        }}
+                        >
+                            <Text style={{
+                                textAlign: 'center',
+                                color: priceColor,
+                                fontSize: 17,
+                                fontWeight: 'bold'
+                            }}
+                            >
+                                {item.price}
+                            </Text>
+                        </View>
+                        <View style={{
+                            flex: 1,
+                            alignItems: 'center',
+                            justifyContent: 'space-around'
+                        }}
+                        >
+                            <View style={{
+                                backgroundColor: '#333333',
+                                width: '80%',
+                                borderWidth: 1,
+                                borderRadius: 4,
+                                borderColor: '#333333',
+                            }}
+                            >
+                                <Text style={{
+                                    textAlign: 'center',
+                                    color: '#fff',
+                                    fontSize: 16,
+                                    fontWeight: 'bold',
+                                    height: 30,
+                                    lineHeight: 30,
+                                }}
+                                >
+                                    休市
+                                </Text>
+                            </View>
+                        </View>
+                    </TouchableOpacity>
+                );
+            } if (!item.isOpen && this.state.isRest) {
+                idx2 += 1;
+                return (
+                    <TouchableOpacity
+                        key={idx}
+                        style={[SortStyles.positionContainer,
+                            idx2 % 2 === 0
+                                ? { backgroundColor: '#fff' }
+                                : { backgroundColor: '#F8F7F4' }]}
+                    >
+                        <View style={[{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            justifyContent: 'space-around',
+                            height: 50,
+                            flex: 1.3
+                        }]}
+                        >
+                            <Text style={{
+                                flex: 1,
+                                color: '#000',
+                                textAlign: 'center',
+                                fontSize: 16,
+                                // fontWeight: 'bold'
+                            }}
+                            >
+                                {idx2}
+                            </Text>
+                            <Text style={{
+                                flex: 4,
+                                color: '#000',
+                                fontSize: 14,
+                                textAlign: 'left',
+                                fontWeight: 'bold'
+                            }}
+                            >
+                                {item.name}
+                            </Text>
+                            {this.props.MainStore.isHot(item.code) ? (
+                                <View style={{ flex: 1 }}>
+                                    <Image
+                                        source={hot}
+                                        style={{
+                                            width: 12,
+                                            height: 13,
+                                        }}
+                                    />
+                                </View>
+                            ) : []}
+                            {this.props.MainStore.isNew(item.code) ? (
+                                <View style={{
+                                    // flex: 2
+                                    left: 5,
+                                    width: 50,
+                                    backgroundColor: '#00b38f',
+                                    alignItems: 'center',
+                                    borderRadius: 3
+                                }}
+                                >
+                                    <Text style={{
+                                        // flex: 2
+                                        color: '#fff'
+                                    }}
+                                    >
+                             NEW
+                                    </Text>
+                                </View>
+                            ) : []}
+                        </View>
+                        <View style={{
+                            flex: 2
+                        }}
+                        >
+                            <Text style={{
+                                textAlign: 'center',
+                                color: priceColor,
+                                fontSize: 17,
+                                fontWeight: 'bold'
+                            }}
+                            >
+                                {item.price}
+                            </Text>
+                        </View>
+                        <View style={{
+                            flex: 1,
+                            alignItems: 'center',
+                            justifyContent: 'space-around'
+                        }}
+                        >
+                            <View style={{
+                                backgroundColor: item.isUp ? '#E13628' : '#00b38f',
+                                width: '80%',
+                                borderWidth: 1,
+                                borderRadius: 4,
+                                borderColor: item.isUp ? RAISE : FALL,
+                            }}
+                            >
+                                <Text style={{
+                                    textAlign: 'center',
+                                    color: '#fff',
+                                    fontSize: 18,
+                                    fontWeight: 'bold',
+                                    height: 30,
+                                    lineHeight: 30,
+                                }}
+                                >
+                                    {item.rate}
+                                </Text>
+                            </View>
+                        </View>
+                    </TouchableOpacity>
+                );
+            }
+        });
 
+        return content;
+    }
+
+    render() {
         return (
             <View style={SortStyles.root}>
                 <View style={SortStyles.titleContainer}>
@@ -122,348 +503,7 @@ class Sort extends Component {
                     </View>
                     <View style={SortStyles.noContainer} />
                 </View>
-                {this.state.arr.length ? this.state.arr.map((item, idx) => {
-                    const priceColor = item.isUp
-                        ? RAISE
-                        : FALL;
-                    if (item.isOpen && item.isUp && this.state.isUp && !this.state.isRest) {
-                        idx1 += 1;
-                        return (
-                            <TouchableOpacity
-                                key={idx}
-                                style={[SortStyles.positionContainer,
-                                    idx1 % 2 === 0
-                                        ? { backgroundColor: '#fff' }
-                                        : { backgroundColor: '#F8F7F4' }]}
-                            >
-                                <View style={[{
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                    justifyContent: 'space-around',
-                                    height: 50,
-                                    flex: 1.3
-                                }]}
-                                >
-                                    <Text style={{
-                                        flex: 1,
-                                        color: '#000',
-                                        textAlign: 'center',
-                                        fontSize: 16,
-                                        // fontWeight: 'bold'
-                                    }}
-                                    >
-                                        {idx1}
-                                    </Text>
-                                    <Text style={{
-                                        flex: 4,
-                                        color: '#000',
-                                        fontSize: 14,
-                                        textAlign: 'left',
-                                        fontWeight: 'bold'
-                                    }}
-                                    >
-                                        {item.name}
-                                    </Text>
-                                    {this.props.MainStore.isHot(item.code) ? (
-                                        <View style={{ flex: 1 }}>
-                                            <Image
-                                                source={hot}
-                                                style={{
-                                                    width: 12,
-                                                    height: 13,
-                                                }}
-                                            />
-                                        </View>
-                                    ) : []}
-                                    {this.props.MainStore.isNew(item.code) ? (
-                                        <View style={{
-                                            // flex: 2
-                                            left: 5,
-                                            width: 50,
-                                            backgroundColor: '#00b38f',
-                                            alignItems: 'center',
-                                            borderRadius: 3
-                                        }}
-                                        >
-                                            <Text style={{
-                                                // flex: 2
-                                                color: '#fff'
-                                            }}
-                                            >
-                 NEW
-                                            </Text>
-                                        </View>
-                                    ) : []}
-                                </View>
-                                <View style={{
-                                    flex: 2
-                                }}
-                                >
-                                    <Text style={{
-                                        textAlign: 'center',
-                                        color: priceColor,
-                                        fontSize: 17,
-                                        fontWeight: 'bold'
-                                    }}
-                                    >
-                                        {item.price}
-                                    </Text>
-                                </View>
-                                <View style={{
-                                    flex: 1,
-                                    alignItems: 'center',
-                                    justifyContent: 'space-around'
-                                }}
-                                >
-                                    <View style={{
-                                        backgroundColor: item.isUp ? '#E13628' : '#00b38f',
-                                        width: '80%',
-                                        borderWidth: 1,
-                                        borderRadius: 4,
-                                        borderColor: item.isUp ? RAISE : FALL,
-                                    }}
-                                    >
-                                        <Text style={{
-                                            textAlign: 'center',
-                                            color: '#fff',
-                                            fontSize: 18,
-                                            fontWeight: 'bold',
-                                            height: 30,
-                                            lineHeight: 30,
-                                        }}
-                                        >
-                                            {item.rate}
-                                        </Text>
-                                    </View>
-                                </View>
-                            </TouchableOpacity>
-                        );
-                    } if (item.isOpen && !item.isUp && !this.state.isUp && !this.state.isRest) {
-                        idx3 += 1;
-                        return (
-                            <TouchableOpacity
-                                key={idx}
-                                style={[SortStyles.positionContainer,
-                                    idx3 % 2 === 0
-                                        ? { backgroundColor: '#fff' }
-                                        : { backgroundColor: '#F8F7F4' }]}
-                            >
-                                <View style={[{
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                    justifyContent: 'space-around',
-                                    height: 50,
-                                    flex: 1.3
-                                }]}
-                                >
-                                    <Text style={{
-                                        flex: 1,
-                                        color: '#000',
-                                        textAlign: 'center',
-                                        fontSize: 16,
-                                        // fontWeight: 'bold'
-                                    }}
-                                    >
-                                        {idx3}
-                                    </Text>
-                                    <Text style={{
-                                        flex: 4,
-                                        color: '#000',
-                                        fontSize: 14,
-                                        textAlign: 'left',
-                                        fontWeight: 'bold'
-                                    }}
-                                    >
-                                        {item.name}
-                                    </Text>
-                                    {this.props.MainStore.isHot(item.code) ? (
-                                        <View style={{ flex: 1 }}>
-                                            <Image
-                                                source={hot}
-                                                style={{
-                                                    width: 12,
-                                                    height: 13,
-                                                }}
-                                            />
-                                        </View>
-                                    ) : []}
-                                    {this.props.MainStore.isNew(item.code) ? (
-                                        <View style={{
-                                            // flex: 2
-                                            left: 5,
-                                            width: 50,
-                                            backgroundColor: '#00b38f',
-                                            alignItems: 'center',
-                                            borderRadius: 3
-                                        }}
-                                        >
-                                            <Text style={{
-                                                // flex: 2
-                                                color: '#fff'
-                                            }}
-                                            >
-                 NEW
-                                            </Text>
-                                        </View>
-                                    ) : []}
-                                </View>
-                                <View style={{
-                                    flex: 2
-                                }}
-                                >
-                                    <Text style={{
-                                        textAlign: 'center',
-                                        color: priceColor,
-                                        fontSize: 17,
-                                        fontWeight: 'bold'
-                                    }}
-                                    >
-                                        {item.price}
-                                    </Text>
-                                </View>
-                                <View style={{
-                                    flex: 1,
-                                    alignItems: 'center',
-                                    justifyContent: 'space-around'
-                                }}
-                                >
-                                    <View style={{
-                                        backgroundColor: '#333333',
-                                        width: '80%',
-                                        borderWidth: 1,
-                                        borderRadius: 4,
-                                        borderColor: '#333333',
-                                    }}
-                                    >
-                                        <Text style={{
-                                            textAlign: 'center',
-                                            color: '#fff',
-                                            fontSize: 16,
-                                            fontWeight: 'bold',
-                                            height: 30,
-                                            lineHeight: 30,
-                                        }}
-                                        >
-                 休市
-                                        </Text>
-                                    </View>
-                                </View>
-                            </TouchableOpacity>
-                        );
-                    } if (!item.isOpen && this.state.isRest) {
-                        idx2 += 1;
-                        return (
-                            <TouchableOpacity
-                                key={idx}
-                                style={[SortStyles.positionContainer,
-                                    idx2 % 2 === 0
-                                        ? { backgroundColor: '#fff' }
-                                        : { backgroundColor: '#F8F7F4' }]}
-                            >
-                                <View style={[{
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                    justifyContent: 'space-around',
-                                    height: 50,
-                                    flex: 1.3
-                                }]}
-                                >
-                                    <Text style={{
-                                        flex: 1,
-                                        color: '#000',
-                                        textAlign: 'center',
-                                        fontSize: 16,
-                                        // fontWeight: 'bold'
-                                    }}
-                                    >
-                                        {idx2}
-                                    </Text>
-                                    <Text style={{
-                                        flex: 4,
-                                        color: '#000',
-                                        fontSize: 14,
-                                        textAlign: 'left',
-                                        fontWeight: 'bold'
-                                    }}
-                                    >
-                                        {item.name}
-                                    </Text>
-                                    {this.props.MainStore.isHot(item.code) ? (
-                                        <View style={{ flex: 1 }}>
-                                            <Image
-                                                source={hot}
-                                                style={{
-                                                    width: 12,
-                                                    height: 13,
-                                                }}
-                                            />
-                                        </View>
-                                    ) : []}
-                                    {this.props.MainStore.isNew(item.code) ? (
-                                        <View style={{
-                                            // flex: 2
-                                            left: 5,
-                                            width: 50,
-                                            backgroundColor: '#00b38f',
-                                            alignItems: 'center',
-                                            borderRadius: 3
-                                        }}
-                                        >
-                                            <Text style={{
-                                                // flex: 2
-                                                color: '#fff'
-                                            }}
-                                            >
-                                                NEW
-                                            </Text>
-                                        </View>
-                                    ) : []}
-                                </View>
-                                <View style={{
-                                    flex: 2
-                                }}
-                                >
-                                    <Text style={{
-                                        textAlign: 'center',
-                                        color: priceColor,
-                                        fontSize: 17,
-                                        fontWeight: 'bold'
-                                    }}
-                                    >
-                                        {item.price}
-                                    </Text>
-                                </View>
-                                <View style={{
-                                    flex: 1,
-                                    alignItems: 'center',
-                                    justifyContent: 'space-around'
-                                }}
-                                >
-                                    <View style={{
-                                        backgroundColor: item.isUp ? '#E13628' : '#00b38f',
-                                        width: '80%',
-                                        borderWidth: 1,
-                                        borderRadius: 4,
-                                        borderColor: item.isUp ? RAISE : FALL,
-                                    }}
-                                    >
-                                        <Text style={{
-                                            textAlign: 'center',
-                                            color: '#fff',
-                                            fontSize: 18,
-                                            fontWeight: 'bold',
-                                            height: 30,
-                                            lineHeight: 30,
-                                        }}
-                                        >
-                                            {item.rate}
-                                        </Text>
-                                    </View>
-                                </View>
-                            </TouchableOpacity>
-                        );
-                    }
-                }) : ''}
+                {this.renderTade()}
             </View>
         );
     }

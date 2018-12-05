@@ -79,25 +79,6 @@ class HomePage extends Component {
         }
     }
 
-    // renderNotice() {
-    //     const arr = this.props.HomeStore.noticeAry.slice();
-    //     const content = arr.map((item, idx) => (
-    //         <Text
-    //             key={idx}
-    //             style={{
-    //                 color: '#939393',
-    //                 fontSize: 17,
-    //                 height: 50,
-    //                 lineHeight: 46
-    //             }}
-    //         >
-    //             {item.title}
-    //         </Text>
-    //     ));
-    //     console.log(content);
-    //     return content;
-    // }
-
     render() {
         const arr = this.props.HomeStore.noticeAry.slice();
         const params = this.props.MainStore.quoteData.slice();
@@ -108,13 +89,13 @@ class HomePage extends Component {
             <SafeBody style={HomeStyles.root}>
                 <ScrollView style={{ backgroundColor: '#f9f8f5' }}>
                     <View style={HomeStyles.statusBarContainer}>
-                        <StatusBar
-                            animated
-                            hidden={false}
-                            backgroundColor="green"
-                            barStyle="light-content"
-                            translucent
-                        />
+                        {/* <StatusBar */}
+                        {/* animated */}
+                        {/* hidden={false} */}
+                        {/* backgroundColor="green" */}
+                        {/* barStyle="light-content" */}
+                        {/* translucent */}
+                        {/* /> */}
                         <View style={HomeStyles.swiperContainer}>
                             {this.renderSwiper()}
                         </View>

@@ -10,7 +10,7 @@ import {
     StatusBar,
     ImageBackground,
     Image,
-    TextInput
+    TextInput, Platform
 } from 'react-native';
 import { observer, inject } from 'mobx-react/native';
 import Icons from 'react-native-vector-icons/Ionicons';
@@ -18,6 +18,20 @@ import Icons from 'react-native-vector-icons/Ionicons';
 const width = Dimensions.get('window').width; // 全屏宽高
 const height = Dimensions.get('window').height; // 全屏宽高
 const IMG = require('../../img/mine/lock.png');
+
+const X_WIDTH = 375;
+const X_HEIGHT = 812;
+
+function isIphoneX() {
+    return (
+        (Platform.OS === 'ios'
+            && ((height === X_HEIGHT
+                && width === X_WIDTH)
+                || (height === X_WIDTH
+                    && width === X_HEIGHT)))
+        || Platform.OS === 'android'
+    );
+}
 
 class ChangePassword extends Component {
     static navigationOptions =({ navigation }) => ({
@@ -34,10 +48,30 @@ class ChangePassword extends Component {
             >
                 <Icons name="ios-arrow-back" size={25} color="#FFF" />
             </TouchableOpacity>),
-        headerTitleStyle: {
-            alignSelf: 'center', fontSize: 18, color: '#fff', fontWeight: 'bold'
+        headerRight: (
+            <View>
+                <Text style={{
+                    fontSize: 18,
+                    color: '#fff',
+                    fontWeight: 'bold',
+                    marginRight: 10
+                }}
+                />
+            </View>),
+        headerStyle: {
+            height: isIphoneX() ? 65 : 45,
+            backgroundColor: '#292929',
+            elevation: 0,
+            paddingTop: isIphoneX() ? 20 : 0,
         },
-        headerStyle: { height: 35, backgroundColor: '#292929' }
+        headerTitleStyle: {
+            alignSelf: 'center',
+            fontSize: 18,
+            color: '#fff',
+            fontWeight: 'bold',
+            flex: 1,
+            textAlign: 'center',
+        }
     });
 
     constructor(props) {

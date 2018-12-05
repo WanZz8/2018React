@@ -1762,7 +1762,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.lcing.zhulcaingwwww;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lcing.zhulcaing123434;
 				PRODUCT_NAME = momanage;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1796,7 +1796,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.lcing.zhulcaingwwww;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lcing.zhulcaing123434;
 				PRODUCT_NAME = momanage;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1881,7 +1881,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.lcing.zhulcaingwwww;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lcing.zhulcaing123434;
 				PRODUCT_NAME = momanage;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

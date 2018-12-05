@@ -60,7 +60,6 @@ class Header extends Component {
                                             {this.props.code}
                                         </Text>
                                     </View>
-                                    <View style={[Tradeheaderstyles.triangle]} />
                                 </View>
                             </TouchableHighlight>
                         </View>
@@ -117,7 +116,6 @@ class Header extends Component {
                                         {this.props.code}
                                     </Text>
                                 </View>
-                                <View style={[Tradeheaderstyles.triangle]} />
                             </View>
                         </TouchableOpacity>
                     </View>

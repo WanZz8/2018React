@@ -6,7 +6,7 @@ import {
     StyleSheet,
     Dimensions,
     Image,
-    TouchableOpacity
+    TouchableOpacity, Platform
 } from 'react-native';
 import Icons from 'react-native-vector-icons/Ionicons';
 import { POST, GET } from '../../utils/request'; // 全屏宽高
@@ -16,6 +16,20 @@ import { SCREEN_WIDTH, HOST, QUOTE } from '../../config/baseConfig';
 const width = Dimensions.get('window').width; // 全屏宽高
 const height = Dimensions.get('window').height;
 const IMG = require('../../img/404.jpg');
+
+const X_WIDTH = 375;
+const X_HEIGHT = 812;
+
+function isIphoneX() {
+    return (
+        (Platform.OS === 'ios'
+            && ((height === X_HEIGHT
+                && width === X_WIDTH)
+                || (height === X_WIDTH
+                    && width === X_HEIGHT)))
+        || Platform.OS === 'android'
+    );
+}
 
 class UserInfo extends Component {
     static navigationOptions =({ navigation }) => ({
@@ -32,10 +46,30 @@ class UserInfo extends Component {
             >
                 <Icons name="ios-arrow-back" size={25} color="#FFF" />
             </TouchableOpacity>),
+        headerRight: (
+            <View>
+                <Text style={{
+                    fontSize: 18,
+                    color: '#fff',
+                    fontWeight: 'bold',
+                    marginRight: 10
+                }}
+                />
+            </View>),
         headerTitleStyle: {
-            alignSelf: 'center', fontSize: 18, color: '#fff', fontWeight: 'bold'
+            alignSelf: 'center',
+            flex: 1,
+            textAlign: 'center',
+            fontSize: 18,
+            color: '#fff',
+            fontWeight: 'bold'
         },
-        headerStyle: { height: 35, backgroundColor: '#292929' }
+        headerStyle: {
+            height: isIphoneX() ? 65 : 45,
+            backgroundColor: '#292929',
+            paddingTop: isIphoneX() ? 20 : 0,
+            elevation: 0,
+        }
     });
 
     constructor(props) {

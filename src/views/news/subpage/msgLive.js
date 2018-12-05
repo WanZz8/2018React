@@ -117,7 +117,7 @@ class MsgLive extends Component {
                             <Text
                                 style={[liveInformationStyle.infomationTxt3,
                                     this.state.showArr[item.index]
-                                        ? { height: 17 } : '']}
+                                        ? { height: 20 } : '']}
                             >
                                 {this.state.showArr[item.index]
                                     ? `${content.substr(0, 18)}...` : content}

@@ -30,6 +30,7 @@ class CacheStore {
     }
 
     @computed get isLogin() {
+        console.log(this.status);
         return this.status;
     }
 
