@@ -67,7 +67,7 @@ class Position extends Component {
     renderTrade() {
         let idx1 = 0;
         let idx3 = 0;
-        this.state.arr.length ? this.state.arr.map((item, idx) => {
+        const content = this.state.arr.map((item, idx) => {
             const priceColor = item.isUp
                 ? RAISE
                 : FALL;
@@ -142,7 +142,7 @@ class Position extends Component {
                                         color: '#fff'
                                     }}
                                     >
-                                        NEW
+                             NEW
                                     </Text>
                                 </View>
                             ) : []}
@@ -260,7 +260,7 @@ class Position extends Component {
                                         color: '#fff'
                                     }}
                                     >
-                                        NEW
+                             NEW
                                     </Text>
                                 </View>
                             ) : []}
@@ -309,7 +309,9 @@ class Position extends Component {
                     </TouchableOpacity>
                 );
             }
-        }) : '';
+        });
+
+        return content;
     }
 
     render() {
@@ -349,249 +351,7 @@ class Position extends Component {
                     </View>
                     <View style={PositionStyles.noContainer} />
                 </View>
-                {this.state.arr.length ? this.state.arr.map((item, idx) => {
-                    const priceColor = item.isUp
-                        ? RAISE
-                        : FALL;
-
-                    if (item.isOpen && !this.state.isRest) {
-                        idx1 += 1;
-                        return (
-                            <TouchableOpacity
-                                key={idx}
-                                style={[PositionStyles.positionContainer,
-                                    idx1 % 2 === 0
-                                        ? { backgroundColor: '#fff' }
-                                        : { backgroundColor: '#F8F7F4' }]}
-                                onPress={
-                                    () => {
-                                        this.props.navigation.navigate(
-                                            'Trede', { data: item }
-                                        );
-                                    }}
-                            >
-                                <View style={[{
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                    justifyContent: 'space-around',
-                                    height: 50,
-                                    flex: 1.3
-                                }]}
-                                >
-                                    <Text style={{
-                                        flex: 1,
-                                        color: '#000',
-                                        textAlign: 'center',
-                                        fontSize: 16,
-                                        // fontWeight: 'bold'
-                                    }}
-                                    >
-                                        {idx1}
-                                    </Text>
-                                    <Text style={{
-                                        flex: 4,
-                                        color: '#000',
-                                        fontSize: 14,
-                                        textAlign: 'left',
-                                        fontWeight: 'bold'
-                                    }}
-                                    >
-                                        {item.name}
-                                    </Text>
-                                    {this.props.MainStore.isHot(item.code) ? (
-                                        <View style={{ flex: 1 }}>
-                                            <Image
-                                                source={hot}
-                                                style={{
-                                                    width: 12,
-                                                    height: 13,
-                                                }}
-                                            />
-                                        </View>
-                                    ) : []}
-                                    {this.props.MainStore.isNew(item.code) ? (
-                                        <View style={{
-                                            // flex: 2
-                                            left: 5,
-                                            width: 50,
-                                            backgroundColor: '#00b38f',
-                                            alignItems: 'center',
-                                            borderRadius: 3
-                                        }}
-                                        >
-                                            <Text style={{
-                                                // flex: 2
-                                                color: '#fff'
-                                            }}
-                                            >
-                                                NEW
-                                            </Text>
-                                        </View>
-                                    ) : []}
-                                </View>
-                                <View style={{
-                                    flex: 2
-                                }}
-                                >
-                                    <Text style={{
-                                        textAlign: 'center',
-                                        color: priceColor,
-                                        fontSize: 17,
-                                        fontWeight: 'bold'
-                                    }}
-                                    >
-                                        {item.price}
-                                    </Text>
-                                </View>
-                                <View style={{
-                                    flex: 1,
-                                    alignItems: 'center',
-                                    justifyContent: 'space-around'
-                                }}
-                                >
-                                    <View style={{
-                                        backgroundColor: item.isUp ? '#E13628' : '#00b38f',
-                                        width: '80%',
-                                        borderWidth: 1,
-                                        borderRadius: 4,
-                                        borderColor: item.isUp ? RAISE : FALL,
-                                    }}
-                                    >
-                                        <Text style={{
-                                            textAlign: 'center',
-                                            color: '#fff',
-                                            fontSize: 18,
-                                            fontWeight: 'bold',
-                                            height: 30,
-                                            lineHeight: 30,
-                                        }}
-                                        >
-                                            {item.rate}
-                                        </Text>
-                                    </View>
-                                </View>
-                            </TouchableOpacity>
-                        );
-                    } if (!item.isOpen && this.state.isRest) {
-                        idx3 += 1;
-                        return (
-                            <TouchableOpacity
-                                key={idx}
-                                style={[PositionStyles.positionContainer,
-                                    idx3 % 2 === 0
-                                        ? { backgroundColor: '#fff' }
-                                        : { backgroundColor: '#F8F7F4' }]}
-                                onPress={
-                                    () => {
-                                        this.props.navigation.navigate(
-                                            'Trede', { data: item }
-                                        );
-                                    }}
-                            >
-                                <View style={[{
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                    justifyContent: 'space-around',
-                                    height: 50,
-                                    flex: 1.3
-                                }]}
-                                >
-                                    <Text style={{
-                                        flex: 1,
-                                        color: '#000',
-                                        textAlign: 'center',
-                                        fontSize: 16,
-                                        // fontWeight: 'bold'
-                                    }}
-                                    >
-                                        {idx3}
-                                    </Text>
-                                    <Text style={{
-                                        flex: 4,
-                                        color: '#000',
-                                        fontSize: 14,
-                                        textAlign: 'left',
-                                        fontWeight: 'bold'
-                                    }}
-                                    >
-                                        {item.name}
-                                    </Text>
-                                    {this.props.MainStore.isHot(item.code) ? (
-                                        <View style={{ flex: 1 }}>
-                                            <Image
-                                                source={hot}
-                                                style={{
-                                                    width: 12,
-                                                    height: 13,
-                                                }}
-                                            />
-                                        </View>
-                                    ) : []}
-                                    {this.props.MainStore.isNew(item.code) ? (
-                                        <View style={{
-                                            // flex: 2
-                                            left: 5,
-                                            width: 50,
-                                            backgroundColor: '#00b38f',
-                                            alignItems: 'center',
-                                            borderRadius: 3
-                                        }}
-                                        >
-                                            <Text style={{
-                                                // flex: 2
-                                                color: '#fff'
-                                            }}
-                                            >
-                                                NEW
-                                            </Text>
-                                        </View>
-                                    ) : []}
-                                </View>
-                                <View style={{
-                                    flex: 2
-                                }}
-                                >
-                                    <Text style={{
-                                        textAlign: 'center',
-                                        color: priceColor,
-                                        fontSize: 17,
-                                        fontWeight: 'bold'
-                                    }}
-                                    >
-                                        {item.price}
-                                    </Text>
-                                </View>
-                                <View style={{
-                                    flex: 1,
-                                    alignItems: 'center',
-                                    justifyContent: 'space-around'
-                                }}
-                                >
-                                    <View style={{
-                                        backgroundColor: '#333333',
-                                        width: '80%',
-                                        borderWidth: 1,
-                                        borderRadius: 4,
-                                        borderColor: '#333333',
-                                    }}
-                                    >
-                                        <Text style={{
-                                            textAlign: 'center',
-                                            color: '#fff',
-                                            fontSize: 16,
-                                            fontWeight: 'bold',
-                                            height: 30,
-                                            lineHeight: 30,
-                                        }}
-                                        >
-                                            休市
-                                        </Text>
-                                    </View>
-                                </View>
-                            </TouchableOpacity>
-                        );
-                    }
-                }) : ''}
+                {this.renderTrade()}
                 <View style={PositionStyles.bottomContainer}>
                     <Text style={{
                         // paddingVertical: 3,

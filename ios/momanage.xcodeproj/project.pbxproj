@@ -1053,10 +1053,10 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = 96P45ZXFZ3;
+						DevelopmentTeam = 94XA5655Q5;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
-								enabled = 1;
+								enabled = 0;
 							};
 							com.apple.Push = {
 								enabled = 1;
@@ -1741,7 +1741,7 @@
 				CODE_SIGN_ENTITLEMENTS = momanage/momanage.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = 96P45ZXFZ3;
+				DEVELOPMENT_TEAM = 94XA5655Q5;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/libs/UMComponents",
@@ -1762,7 +1762,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.lcing.zhulcaing;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lcing.zhulcaingwwww;
 				PRODUCT_NAME = momanage;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1775,7 +1775,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CODE_SIGN_ENTITLEMENTS = momanage/momanage.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 96P45ZXFZ3;
+				DEVELOPMENT_TEAM = 94XA5655Q5;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/libs/UMComponents",
@@ -1796,7 +1796,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.lcing.zhulcaing;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lcing.zhulcaingwwww;
 				PRODUCT_NAME = momanage;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1860,7 +1860,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CODE_SIGN_ENTITLEMENTS = momanage/momanage.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 96P45ZXFZ3;
+				DEVELOPMENT_TEAM = 94XA5655Q5;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/libs/UMComponents",
@@ -1881,7 +1881,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.lcing.zhulcaing;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lcing.zhulcaingwwww;
 				PRODUCT_NAME = momanage;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

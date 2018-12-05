@@ -73,6 +73,8 @@ class HomePage extends Component {
                                 autoplay
                                 horizontal
                                 autoplayTimeout={3}
+                                containerStyle={{ width }}
+                                removeClippedSubviews={false}
                             >
                                 <Image
                                     source={IMG.banner1}

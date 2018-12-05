@@ -83,63 +83,65 @@ class Header extends Component {
                     </View>
                 </View>
             );
-        }
-        return (
-            <View style={Tradeheaderstyles.container}>
-                <View style={Tradeheaderstyles.body}>
-                    <Icons
-                        name="ios-arrow-back"
-                        style={[Tradeheaderstyles.back, { color: '#FFF' }]}
-                        onPress={() => {
-                            this.props.navigation.goBack();
-                        }}
-                    />
-                    <View style={Tradeheaderstyles.headerRoot}>
-                        <TouchableOpacity
-                            onPress={() => { this.props.onPress(); }}
-                            style={{
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                            }}
-                        >
-                            <View style={{
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                marginTop: 10
-                            }}
-                            >
-                                <View>
-                                    <Text style={Tradeheaderstyles.switchBtn}>
-                                        {this.props.name}
-                                    </Text>
-                                    <Text style={{ alignSelf: 'center', color: '#F7C5B6' }}>
-                                        {this.props.code}
-                                    </Text>
-                                </View>
-                                <View style={[Tradeheaderstyles.triangle]} />
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={Tradeheaderstyles.listIcon}>
-                        <TouchableOpacity
-                            style={Tradeheaderstyles.positionTac}
+        } else {
+            console.log(999);
+            return (
+                <View style={Tradeheaderstyles.container}>
+                    <View style={Tradeheaderstyles.body}>
+                        <Icons
+                            name="ios-arrow-back"
+                            style={[Tradeheaderstyles.back, { color: '#FFF' }]}
                             onPress={() => {
-                                this.props.navigation.navigate('Rules');
+                                this.props.navigation.goBack();
                             }}
-                        >
-                            <Text style={{
-                                color: '#fff',
-                                fontWeight: 'bold',
-                                fontSize: 14 * RATIO
-                            }}
+                        />
+                        <View style={Tradeheaderstyles.headerRoot}>
+                            <TouchableOpacity
+                                onPress={() => { this.props.onPress(); }}
+                                style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                }}
                             >
-                                规则
-                            </Text>
-                        </TouchableOpacity>
+                                <View style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    marginTop: 10
+                                }}
+                                >
+                                    <View>
+                                        <Text style={Tradeheaderstyles.switchBtn}>
+                                            {this.props.name}
+                                        </Text>
+                                        <Text style={{ alignSelf: 'center', color: '#F7C5B6' }}>
+                                            {this.props.code}
+                                        </Text>
+                                    </View>
+                                    <View style={[Tradeheaderstyles.triangle]} />
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={Tradeheaderstyles.listIcon}>
+                            <TouchableOpacity
+                                style={Tradeheaderstyles.positionTac}
+                                onPress={() => {
+                                    this.props.navigation.navigate('Rules');
+                                }}
+                            >
+                                <Text style={{
+                                    color: '#fff',
+                                    fontWeight: 'bold',
+                                    fontSize: 14 * RATIO
+                                }}
+                                >
+                                    规则
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
-            </View>
-        );
+            );
+        }
     }
 
     forward() {
