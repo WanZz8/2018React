@@ -1,4 +1,4 @@
 <resources>
     <string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey"></string>
-    <string name="app_name">momanage</string>
+    <string name="app_name">期货掌上原油宝</string>
 </resources>

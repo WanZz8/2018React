@@ -37,11 +37,16 @@ class HomePage extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            swiperShow: false
+        };
     }
 
     componentDidMount() {
         this.props.HomeStore.getNotice();
+        setTimeout(() => {
+            this.setState({ swiperShow: true });
+        }, 0);
     }
 
     sharelink() {
@@ -50,6 +55,48 @@ class HomePage extends Component {
             'Share'
         ) : Alert.alert('提示', '你还没有登录');
     }
+
+    renderSwiper() {
+        if (this.state.swiperShow) {
+            return (
+                <Swiper
+                    autoplay
+                    horizontal
+                    autoplayTimeout={3}
+                    containerStyle={{ width }}
+                    removeClippedSubviews={false}
+                >
+                    <Image
+                        source={IMG.banner1}
+                        style={HomeStyles.bannerImg}
+                    />
+                    <Image
+                        source={IMG.banner2}
+                        style={HomeStyles.bannerImg}
+                    />
+                </Swiper>
+            );
+        }
+    }
+
+    // renderNotice() {
+    //     const arr = this.props.HomeStore.noticeAry.slice();
+    //     const content = arr.map((item, idx) => (
+    //         <Text
+    //             key={idx}
+    //             style={{
+    //                 color: '#939393',
+    //                 fontSize: 17,
+    //                 height: 50,
+    //                 lineHeight: 46
+    //             }}
+    //         >
+    //             {item.title}
+    //         </Text>
+    //     ));
+    //     console.log(content);
+    //     return content;
+    // }
 
     render() {
         const arr = this.props.HomeStore.noticeAry.slice();
@@ -69,22 +116,7 @@ class HomePage extends Component {
                             translucent
                         />
                         <View style={HomeStyles.swiperContainer}>
-                            <Swiper
-                                autoplay
-                                horizontal
-                                autoplayTimeout={3}
-                                containerStyle={{ width }}
-                                removeClippedSubviews={false}
-                            >
-                                <Image
-                                    source={IMG.banner1}
-                                    style={HomeStyles.bannerImg}
-                                />
-                                <Image
-                                    source={IMG.banner2}
-                                    style={HomeStyles.bannerImg}
-                                />
-                            </Swiper>
+                            {this.renderSwiper()}
                         </View>
                     </View>
                     <View style={HomeStyles.scrollContainer}>
@@ -99,16 +131,18 @@ class HomePage extends Component {
                                 {arr.length ? (
                                     <Swiper
                                         autoplay
+                                        containerStyle={{ width: '80%' }}
                                         height={50}
-                                        autoplayTimeout={3}
+                                        removeClippedSubviews={false}
                                         showsPagination={false}
                                         style={{
                                             alignItems: 'center',
                                             justifyContent: 'space-around',
                                             height: 50
                                         }}
+                                        autoplayTimeout={3}
                                     >
-                                        {arr.map((item, idx) => (
+                                        { arr.map((item, idx) => (
                                             <Text
                                                 key={idx}
                                                 style={{

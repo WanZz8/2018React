@@ -61,6 +61,7 @@ const Tab = TabNavigator(
                 }
             )
         },
+
         Find: {
             screen: Find,
             navigationOptions: ({ navigation }) => (
