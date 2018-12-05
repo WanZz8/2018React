@@ -10,11 +10,14 @@ import {
     StatusBar,
     ImageBackground,
     Image,
+    SafeAreaView,
     TextInput,
-    DeviceEventEmitter
+    DeviceEventEmitter,
+    Platform,
 } from 'react-native';
 import { observer, inject } from 'mobx-react/native';
 import Icons from 'react-native-vector-icons/Ionicons';
+import SafeBody from '../../common/safeView';
 import {
     HOST,
     DOMAIN, QUOTE
@@ -23,6 +26,20 @@ import {
 const width = Dimensions.get('window').width; // 全屏宽高
 const height = Dimensions.get('window').height; // 全屏宽高
 const IMG = require('../../img/mine/lock.png');
+
+const X_WIDTH = 375;
+const X_HEIGHT = 812;
+
+function isIphoneX() {
+    return (
+        (Platform.OS === 'ios'
+            && ((height === X_HEIGHT
+                && width === X_WIDTH)
+                || (height === X_WIDTH
+                    && width === X_HEIGHT)))
+        || Platform.OS === 'android'
+    );
+}
 
 @inject('CacheStore')
 class Login extends Component {
@@ -41,9 +58,19 @@ class Login extends Component {
                 <Icons name="ios-arrow-back" size={25} color="#FFF" />
             </TouchableOpacity>),
         headerTitleStyle: {
-            alignSelf: 'center', fontSize: 18, color: '#fff', fontWeight: 'bold'
+            alignSelf: 'center',
+            fontSize: 18,
+            color: '#fff',
+            fontWeight: 'bold',
+            flex: 1,
+            textAlign: 'center'
         },
-        headerStyle: { height: 35, backgroundColor: '#292929' },
+        headerStyle: {
+            height: isIphoneX() ? 65 : 45,
+            backgroundColor: '#292929',
+            elevation: 0,
+            paddingTop: isIphoneX() ? 20 : 0,
+        },
         headerRight: (
             <TouchableOpacity
                 onPress={() => {
@@ -134,7 +161,7 @@ class Login extends Component {
 
     render() {
         return (
-            <View style={LoginStyles.root}>
+            <SafeAreaView style={LoginStyles.root}>
                 <View style={LoginStyles.mainContainer}>
                     <View style={{
                         flex: 2
@@ -286,7 +313,7 @@ class Login extends Component {
                     </View>
                     <View style={{ flex: 3 }} />
                 </View>
-            </View>
+            </SafeAreaView>
         );
     }
 }
@@ -299,6 +326,15 @@ const LoginStyles = StyleSheet.create({
         width,
         height,
         backgroundColor: '#fff'
+    },
+    // bg: {
+    //     height: isIphoneX() ? 27 : 27,
+    //     flexDirection: 'column',
+    //     alignItems: 'center',
+    //     backgroundColor: '#000',
+    // },
+    statusBarContainer: {
+        // alignItems: 'center'
     },
     mainContainer: {
         width,

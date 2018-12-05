@@ -139,8 +139,9 @@ const RootNavigator = StackNavigator(
             // 开启动画
             animationEnabled: true,
             // 开启边缘触摸返回
-            gesturesEnabled: true
+            gesturesEnabled: true,
         },
+        headerLayoutPreset: 'center',
         mode: 'card',
         transitionConfig: () => ({
             // 统一安卓和苹果页面跳转的动画

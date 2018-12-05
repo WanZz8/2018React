@@ -14,10 +14,11 @@ import { observer, inject } from 'mobx-react/native';
 // import { computed } from 'mobx';
 import Icons from 'react-native-vector-icons/Ionicons';
 import HTML from 'react-native-render-html';
-import { formatDate } from '../../utils/tool';
+import { formatDate } from '../../utils/tool'; // 全屏宽高
+import SafeBody from '../../common/safeView';
 
 const width = Dimensions.get('window').width; // 全屏宽高
-const height = Dimensions.get('window').height; // 全屏宽高
+const height = Dimensions.get('window').height;
 
 @inject('NoticeStore')
 @observer
@@ -37,7 +38,12 @@ class Find extends Component {
                 <Icons name="ios-arrow-back" size={25} color="#FFF" />
             </TouchableOpacity>),
         headerTitleStyle: {
-            alignSelf: 'center', fontSize: 18, color: '#fff', fontWeight: 'bold'
+            alignSelf: 'center',
+            fontSize: 18,
+            color: '#fff',
+            fontWeight: 'bold',
+            flex: 1,
+            textAlign: 'center'
         },
         headerStyle: { height: 35, backgroundColor: '#292929' }
     });

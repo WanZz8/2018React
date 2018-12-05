@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import {
     Platform,
     StyleSheet,
+    View,
     YellowBox,
 } from 'react-native';
-import codePush from 'react-native-code-push';
 
 // 全局注册并注入mobx
 import { Provider } from 'mobx-react';
