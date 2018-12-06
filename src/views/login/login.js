@@ -14,6 +14,7 @@ import {
     TextInput,
     DeviceEventEmitter,
     Platform,
+    Keyboard
 } from 'react-native';
 import { observer, inject } from 'mobx-react/native';
 import Icons from 'react-native-vector-icons/Ionicons';
@@ -93,7 +94,8 @@ class Login extends Component {
         super(props);
         this.state = {
             account: '',
-            password: ''
+            password: '',
+            keyboardHeight: 0
         };
         this.onActionSelected = this.onActionSelected.bind(this);
         this.onChangeText = this.onChangeText.bind(this);
@@ -101,8 +103,43 @@ class Login extends Component {
         this.login = this.login.bind(this);
     }
 
+    componentWillMount() {
+        this.keyboardDidShowListener = Keyboard.addListener(
+            'keyboardDidShow',
+            this._keyboardDidShow.bind(this)
+        );
+        this.keyboardDidHideListener = Keyboard.addListener(
+            'keyboardDidHide',
+            this._keyboardDidHide.bind(this)
+        );
+    }
+
     componentDidMount() {
         this.props.navigation.setParams({ handleShare: this.onActionSelected });
+    }
+
+    // 注销监听
+    componentWillUnmount() {
+        this.keyboardDidHideListener && this.keyboardDidShowListener.remove();
+        this.keyboardDidHideListener && this.keyboardDidHideListener.remove();
+    }
+
+
+    键盘弹起后执行
+
+    _keyboardDidShow(e) {
+        this.setState({
+            keyboardHeight: e.endCoordinates.height
+        });
+    }
+
+
+    键盘收起后执行
+
+    _keyboardDidHide(e) {
+        this.setState({
+            keyboardHeight: 0
+        });
     }
 
     onActionSelected() {
@@ -126,7 +163,7 @@ class Login extends Component {
 
     async login() {
         let jpush = this.props.CacheStore.jpush;
-        console.log(jpush);
+        // console.log(jpush);
         let str = ''; const
             data = {
                 mobile: this.state.account,
@@ -161,16 +198,17 @@ class Login extends Component {
 
     render() {
         return (
-            <SafeAreaView style={LoginStyles.root}>
-                <View style={LoginStyles.mainContainer}>
+            <SafeAreaView style={[LoginStyles.root]}>
+                <View style={[LoginStyles.mainContainer]}>
                     <View style={{
                         flex: 2
                     }}
                     />
                     <View style={{
-                        flex: 6,
+                        // flex: 6,
                         justifyContent: 'space-around',
-                        alignItems: 'center'
+                        alignItems: 'center',
+                        marginBottom: this.state.keyboardHeight
                     }}
                     >
                         <View style={{
@@ -188,12 +226,14 @@ class Login extends Component {
                                 }}
                             />
                         </View>
-                        <View style={{
-                            width,
-                            alignItems: 'center',
-                            height: 55,
-                            marginBottom: 30,
-                        }}
+                        <View
+                            style={{
+                                width,
+                                alignItems: 'center',
+                                height: 55,
+                                marginBottom: 30,
+                            }}
+                            behavior="padding"
                         >
                             <TextInput
                                 style={{
@@ -217,6 +257,7 @@ class Login extends Component {
                                 keyboardType="numeric"
                                 onChangeText={this.onChangeText}
                             />
+
                         </View>
                         <View style={{
                             width,
@@ -232,7 +273,7 @@ class Login extends Component {
                                     borderRadius: 30,
                                     height: 55,
                                     width: '80%',
-                                    paddingHorizontal: 10
+                                    paddingHorizontal: 10,
                                 }}
                                 placeholder="密码"
                                 underlineColorAndroid="transparent"
@@ -269,10 +310,10 @@ class Login extends Component {
                                 <Text style={{
                                     color: '#fff',
                                     fontSize: 18,
-                                    fontWeight: 'bold'
+                                    fontWeight: 'bold',
                                 }}
                                 >
-                                    登录
+                                        登录
                                 </Text>
                             </TouchableOpacity>
                         </View>

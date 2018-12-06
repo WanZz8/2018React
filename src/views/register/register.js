@@ -11,7 +11,8 @@ import {
     ImageBackground,
     Image,
     TextInput,
-    Keyboard, Platform
+    Keyboard,
+    Platform
 } from 'react-native';
 import { observer, inject } from 'mobx-react/native';
 import Icons from 'react-native-vector-icons/Ionicons';
@@ -91,13 +92,47 @@ class Register extends Component {
             password: '',
             countdown: 0,
             name: '',
-            code: ''
+            code: '',
+            keyboardHeight: 0
         };
         this._onChangeText = this._onChangeText.bind(this);
         this.changeCode = this.changeCode.bind(this);
         this.sendCode = this.sendCode.bind(this);
         this.nextStep = this.nextStep.bind(this);
         this.submit = this.submit.bind(this);
+    }
+
+    componentDidMount() {
+        this.keyboardDidShowListener = Keyboard.addListener(
+            'keyboardDidShow',
+            this._keyboardDidShow.bind(this)
+        );
+        this.keyboardDidHideListener = Keyboard.addListener(
+            'keyboardDidHide',
+            this._keyboardDidHide.bind(this)
+        );
+    }
+
+    // 注销监听
+    componentWillUnmount() {
+        this.keyboardDidHideListener && this.keyboardDidShowListener.remove();
+        this.keyboardDidHideListener && this.keyboardDidHideListener.remove();
+    }
+
+
+    _keyboardDidShow(e) {
+        this.setState({
+            keyboardHeight: e.endCoordinates.height
+        });
+    }
+
+
+    键盘收起后执行
+
+    _keyboardDidHide(e) {
+        this.setState({
+            keyboardHeight: 0
+        });
     }
 
     _onChangeText(text) {
@@ -242,7 +277,7 @@ class Register extends Component {
                     }}
                     />
                     <View style={{
-                        flex: 6,
+                        marginBottom: this.state.keyboardHeight,
                         justifyContent: 'space-around',
                         alignItems: 'center'
                     }}

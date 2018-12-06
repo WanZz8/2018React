@@ -10,7 +10,9 @@ import {
     StatusBar,
     ImageBackground,
     Image,
-    TextInput, Platform
+    TextInput,
+    Platform,
+    Keyboard
 } from 'react-native';
 import { observer, inject } from 'mobx-react/native';
 import Icons from 'react-native-vector-icons/Ionicons';
@@ -79,6 +81,38 @@ class Forget extends Component {
         this.state = {};
     }
 
+    componentDidMount() {
+        this.keyboardDidShowListener = Keyboard.addListener(
+            'keyboardDidShow',
+            this._keyboardDidShow.bind(this)
+        );
+        this.keyboardDidHideListener = Keyboard.addListener(
+            'keyboardDidHide',
+            this._keyboardDidHide.bind(this)
+        );
+    }
+
+    // 注销监听
+    componentWillUnmount() {
+        this.keyboardDidHideListener && this.keyboardDidShowListener.remove();
+        this.keyboardDidHideListener && this.keyboardDidHideListener.remove();
+    }
+
+    _keyboardDidShow(e) {
+        this.setState({
+            keyboardHeight: e.endCoordinates.height
+        });
+    }
+
+
+    键盘收起后执行
+
+    _keyboardDidHide(e) {
+        this.setState({
+            keyboardHeight: 0
+        });
+    }
+
     render() {
         return (
             <View style={RegisterStyles.root}>
@@ -88,7 +122,7 @@ class Forget extends Component {
                     }}
                     />
                     <View style={{
-                        flex: 6,
+                        marginBottom: this.state.keyboardHeight,
                         justifyContent: 'space-around',
                         alignItems: 'center'
                     }}
