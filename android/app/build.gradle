@@ -96,14 +96,14 @@ def enableProguardInReleaseBuilds = false
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
         applicationId "com.momanage"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
         manifestPlaceholders = [
                 JPUSH_APPKEY: "",
                 APP_CHANNEL : "default"
@@ -143,6 +143,18 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-vector-icons')
+    compile project(':react-native-touch-id')
+    compile project(':react-native-randombytes')
+    compile project(':react-native-device-info')
+    compile project(':react-native-code-push')
+    compile project(':jpush-react-native')
+
+    compile project(':appcenter-crashes')
+    compile project(':appcenter-analytics')
+    compile project(':appcenter')
+    compile project(':react-native-randombytes')
+    compile project(':react-native-touch-id')
     compile project(':react-native-device-info')
     compile project(':react-native-vector-icons')
     compile project(':react-native-code-push')

@@ -40,8 +40,8 @@ class UserInfo extends Component {
                     navigation.goBack();
                 }}
                 style={{
-                    marginLeft: 5,
-                    width: 20
+                    marginLeft: 15,
+                    width: 25
                 }}
             >
                 <Icons name="ios-arrow-back" size={25} color="#FFF" />

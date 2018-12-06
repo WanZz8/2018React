@@ -66,7 +66,6 @@ class TradePage extends Component {
 
     componentDidMount() {
         this.scription = DeviceEventEmitter.addListener('KeyBack', (data) => {
-            console.log(data);
             this.setState({
                 show: data,
             });
@@ -76,7 +75,6 @@ class TradePage extends Component {
     componentWillReceiveProps(nextProps) {
         if (nextProps) {
             const { data } = nextProps.navigation.state.params;
-            console.log(data);
             this.setState({
                 code: data.code,
                 name: data.name,
@@ -130,7 +128,6 @@ class TradePage extends Component {
 
     renderWebview() {
         if (Platform.OS === 'ios') {
-            console.log(this.state.url);
             return (
                 <WKWebView
                     style={{

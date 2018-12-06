@@ -10,7 +10,7 @@ import {
     StatusBar,
     ImageBackground,
     Image,
-    AsyncStorage,
+    SafeAreaView,
     DeviceEventEmitter
 } from 'react-native';
 import { observer, inject } from 'mobx-react/native';
@@ -71,20 +71,20 @@ class Mine extends Component {
     render() {
         let that = this;
         return (
-            <SafeBody style={MineStyles.root} color="#F8F7F4">
+            <SafeAreaView style={MineStyles.root} color="#F8F7F4">
                 <ScrollView contentContainerStyle={{
-                    justifyContent: 'flex-start',
                     width,
                     backgroundColor: '#F8F7F4'
                 }}
                 >
                     <View style={MineStyles.statusContainer}>
-                        <StatusBar
-                            animated
-                            hidden={false}
-                            backgroundColor="transparent"
-                            translucent
-                        />
+                        {/* 沉浸式状态栏 */}
+                        {/* <StatusBar */}
+                        {/* animated */}
+                        {/* hidden={false} */}
+                        {/* backgroundColor="transparent" */}
+                        {/* translucent */}
+                        {/* /> */}
                         <ImageBackground style={MineStyles.swiperContainer} source={IMG.personBg}>
                             <TouchableOpacity
                                 style={MineStyles.viewImg}
@@ -556,7 +556,7 @@ class Mine extends Component {
                         </TouchableOpacity>
                     </View>
                 </ScrollView>
-            </SafeBody>
+            </SafeAreaView>
         );
     }
 }

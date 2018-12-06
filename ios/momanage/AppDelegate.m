@@ -6,6 +6,9 @@
  */
 
 #import "AppDelegate.h"
+#import <AppCenterReactNativeCrashes/AppCenterReactNativeCrashes.h>
+#import <AppCenterReactNativeAnalytics/AppCenterReactNativeAnalytics.h>
+#import <AppCenterReactNative/AppCenterReactNative.h>
 #import <CodePush/CodePush.h>
 #import <RCTJPushModule.h>
 #ifdef NSFoundationVersionNumber_iOS_9_x_Max
@@ -79,6 +82,12 @@
                         channel:nil apsForProduction:nil];
 
   NSURL *jsCodeLocation;
+
+  [AppCenterReactNativeCrashes register];  // Initialize AppCenter crashes
+
+  [AppCenterReactNativeAnalytics registerWithInitiallyEnabled:false];  // Initialize AppCenter analytics
+
+  [AppCenterReactNative register];  // Initialize AppCenter 
 
   
     #ifdef DEBUG

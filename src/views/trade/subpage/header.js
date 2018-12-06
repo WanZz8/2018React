@@ -174,7 +174,7 @@ const Tradeheaderstyles = StyleSheet.create({
         height: isIphoneX() ? 68 : 55,
         fontSize: 24,
         color: '#000',
-        left: 8,
+        left: 15,
         top: isIphoneX() ? 35 : 25,
         zIndex: 1
     },

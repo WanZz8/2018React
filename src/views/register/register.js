@@ -46,8 +46,8 @@ class Register extends Component {
         headerLeft: (
             <TouchableOpacity
                 style={{
-                    marginLeft: 5,
-                    width: 20
+                    marginLeft: 15,
+                    width: 25
                 }}
                 onPress={() => {
                     navigation.goBack();
