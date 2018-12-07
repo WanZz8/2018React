@@ -198,7 +198,7 @@ class TradePage extends Component {
                         >
                             <Text>
                                 {this.state.isOPen ? '开市' : '休市'}
-                                {formatDate('y-m-d h:i', date)}
+                                {/* {formatDate('y-m-d h:i', date)} */}
                             </Text>
                         </View>
                     </View>

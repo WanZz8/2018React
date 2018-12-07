@@ -37,11 +37,6 @@ const RulesItems = [
         show: false
     },
     {
-        title: ' 交易综合费',
-        content: '期货每手交易综合费，买进卖出只收取一次',
-        show: false
-    },
-    {
         title: ' 盈利如何分配？',
         content: '盈利100%归操盘手所有，投资人不参与盈利分成。',
         show: false

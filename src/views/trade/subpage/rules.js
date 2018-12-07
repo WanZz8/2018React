@@ -188,7 +188,7 @@ class Rules extends Component {
                                 fontSize: 16
                             }}
                             >
-                                美元
+                                模拟币
                             </Text>
                         </View>
                         <View style={{
@@ -217,7 +217,7 @@ class Rules extends Component {
                                 fontSize: 16
                             }}
                             >
-                                每点5美元
+                                每点5模拟币
                             </Text>
                         </View>
                         <View style={{
@@ -275,7 +275,7 @@ class Rules extends Component {
                                 fontSize: 16
                             }}
                             >
-                                波动一次 = 5 美元
+                                波动一次 = 5 模拟币
                             </Text>
                         </View>
                         <View style={{
@@ -376,36 +376,7 @@ class Rules extends Component {
                                 fontSize: 16
                             }}
                             >
-                                158元 / 手
-                            </Text>
-                        </View>
-                        <View style={{
-                            width,
-                            alignItems: 'center',
-                            justifyContent: 'space-around',
-                            flexDirection: 'row',
-                            height: 55,
-                            borderBottomColor: '#ccc',
-                            borderBottomWidth: 0.4,
-                            paddingHorizontal: 15
-                        }}
-                        >
-                            <Text style={{
-                                textAlign: 'left',
-                                flex: 1,
-                                color: '#999',
-                                fontSize: 16
-                            }}
-                            >
-                                汇率
-                            </Text>
-                            <Text style={{
-                                textAlign: 'right',
-                                flex: 1,
-                                fontSize: 16
-                            }}
-                            >
-                                1美元=7.0人命币 (汇率波动较大时，将会进行调整)
+                                158模拟币 / 手
                             </Text>
                         </View>
                         <View style={{
