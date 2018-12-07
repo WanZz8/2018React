@@ -93,11 +93,11 @@ class Position extends Component {
                             alignItems: 'center',
                             justifyContent: 'space-around',
                             height: 50,
-                            flex: 1.3
+                            flex: 1.5
                         }]}
                         >
                             <Text style={{
-                                flex: 1,
+                                width: 25,
                                 color: '#000',
                                 textAlign: 'center',
                                 fontSize: 16,
@@ -215,7 +215,7 @@ class Position extends Component {
                         }]}
                         >
                             <Text style={{
-                                flex: 1,
+                                width: 25,
                                 color: '#000',
                                 textAlign: 'center',
                                 fontSize: 16,

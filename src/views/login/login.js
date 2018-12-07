@@ -182,12 +182,22 @@ class Login extends Component {
             if (res.status === 200) {
                 let body = await res.text();
                 body = JSON.parse(body);
-                this.props.CacheStore.setLogin(this.state.account, this.state.password);
-                this.props.CacheStore.getUserInfo();
-                const { goBack, state } = this.props.navigation;
-                state.params.refresh();
-                DeviceEventEmitter.emit('KeyBack', true);
-                goBack();
+                if (body.code === 200
+                   || body.status === 200
+                   || body.code === 0
+                   || body.errorCode === 200
+                   || body.errorCode === 0
+                   || body.resultCode === 200
+                   || body.resultCode === 0) {
+                    this.props.CacheStore.setLogin(this.state.account, this.state.password);
+                    this.props.CacheStore.getUserInfo();
+                    const { goBack, state } = this.props.navigation;
+                    state.params.refresh();
+                    DeviceEventEmitter.emit('KeyBack', true);
+                    goBack();
+                } else {
+                    Alert.alert('提示', body.errorMsg);
+                }
             }
         } else if (!this.state.account) {
             Alert.alert('请输入手机号');

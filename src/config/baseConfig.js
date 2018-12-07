@@ -29,7 +29,7 @@ export const QUOTE = 'https://quote.76bao.hk';
 // banner src文件夹下的图片文件名
 export const CHANNEL = 'APP';
 
-export const CHART_URL = 'http://www.lt168168.com';
+export const CHART_URL = 'http://www.miaoletou.com/';
 // export const CHART_URLmdf = 'http://mdf.lt168168.com';
 
 // export const DefaultLanguage = getDefaultLanguage();

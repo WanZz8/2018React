@@ -133,7 +133,7 @@ class Sort extends Component {
                         }]}
                         >
                             <Text style={{
-                                flex: 1,
+                                width: 25,
                                 color: '#000',
                                 textAlign: 'center',
                                 fontSize: 16,
@@ -245,7 +245,7 @@ class Sort extends Component {
                         }]}
                         >
                             <Text style={{
-                                flex: 1,
+                                width: 25,
                                 color: '#000',
                                 textAlign: 'center',
                                 fontSize: 16,
@@ -357,7 +357,7 @@ class Sort extends Component {
                         }]}
                         >
                             <Text style={{
-                                flex: 1,
+                                width: 25,
                                 color: '#000',
                                 textAlign: 'center',
                                 fontSize: 16,

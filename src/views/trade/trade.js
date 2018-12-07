@@ -148,6 +148,7 @@ class TradePage extends Component {
             <WebView
                 ref={(c) => { this._chart = c; }}
                 source={{ uri: this.state.url }}
+                style={{ width }}
                 javaScriptEnabled
                 scalesPageToFit
                 renderLoading={this.renderLoading}
@@ -173,7 +174,7 @@ class TradePage extends Component {
                 <View style={TradeStyles.PartTop1}>
                     <View style={TradeStyles.rulesContainer}>
                         <View style={{
-                            height: 65,
+                            // height: 65,
                             justifyContent: 'space-around',
                             alignItems: 'center'
                         }}
@@ -184,7 +185,10 @@ class TradePage extends Component {
                             >
                                 {this.state.price}
                             </Text>
-                            <Text>{this.state.rate}</Text>
+                            <Text>
+                                0.00
+                                {this.state.rate}
+                            </Text>
                         </View>
                         <View style={{
                             height: 65,
@@ -198,9 +202,7 @@ class TradePage extends Component {
                             </Text>
                         </View>
                     </View>
-                    <View
-                        style={TradeStyles.timesContainer}
-                    >
+                    <View style={TradeStyles.timesContainer}>
                         <TouchableHighlight
                             style={[{
                                 paddingHorizontal: 10,
@@ -346,10 +348,12 @@ const TradeStyles = StyleSheet.create({
         width,
         alignItems: 'center',
         justifyContent: 'space-around',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        flex: 1,
+        marginBottom: 5
     },
     timesContainer: {
-        height: 30,
+        flex: 1,
         justifyContent: 'space-around',
         alignItems: 'center',
         flexDirection: 'row'
