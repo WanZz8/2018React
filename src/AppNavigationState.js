@@ -15,6 +15,7 @@ import {
 import JPushModule from 'jpush-react-native';
 import { observer, inject } from 'mobx-react/native';
 import codePush from 'react-native-code-push';
+import Splash from './utils/splash';
 // import { NavigationActions, } from 'react-navigation';
 // import { Toast } from 'teaset';
 
@@ -44,6 +45,7 @@ class AppNavigationState extends Component {
     }
 
     componentDidMount() {
+        Splash.hide();
         this.sync();
         setTimeout(() => this.loadingText(), 2000);
         this.loadingFinish();

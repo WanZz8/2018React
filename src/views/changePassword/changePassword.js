@@ -161,6 +161,7 @@ class ChangePassword extends Component {
                                     paddingHorizontal: 10
                                 }}
                                 placeholder="旧密码"
+                                underlineColorAndroid="transparent"
                                 // onChangeText={(text) => {
                                 //     text.length > 0
                                 // ? this.setState({ buttonColor: true })
@@ -186,6 +187,7 @@ class ChangePassword extends Component {
                                     paddingHorizontal: 10
                                 }}
                                 placeholder="新密码"
+                                underlineColorAndroid="transparent"
                                 // onChangeText={(text) => {
                                 //     text.length > 0
                                 // ? this.setState({ buttonColor: true })
@@ -211,6 +213,7 @@ class ChangePassword extends Component {
                                     paddingHorizontal: 10
                                 }}
                                 placeholder="确认密码"
+                                underlineColorAndroid="transparent"
                                 // onChangeText={(text) => {
                                 //     text.length > 0
                                 // ? this.setState({ buttonColor: true })

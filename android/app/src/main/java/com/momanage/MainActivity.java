@@ -9,7 +9,7 @@ public class MainActivity extends ReactActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
-//        SplashScreen.show(this);
+        SplashScreen.show(this);
         super.onCreate(savedInstanceState);
         MobclickAgent.setSessionContinueMillis(1000);
         MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_DUM_NORMAL);

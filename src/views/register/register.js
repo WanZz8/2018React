@@ -333,6 +333,7 @@ class Register extends Component {
                                             }}
                                             onChangeText={this._onChangeText}
                                             placeholder="手机号"
+                                            underlineColorAndroid="transparent"
                                         />
                                     </View>
                                     {
@@ -461,6 +462,7 @@ class Register extends Component {
                                                 width: '80%',
                                                 paddingHorizontal: 10
                                             }}
+                                            underlineColorAndroid="transparent"
                                             autoCapitalize="none"
                                             placeholder="请输入用户名"
                                         />
@@ -481,6 +483,7 @@ class Register extends Component {
                                                 width: '80%',
                                                 paddingHorizontal: 10
                                             }}
+                                            underlineColorAndroid="transparent"
                                             autoCapitalize="none"
                                             placeholder="密码"
                                         />

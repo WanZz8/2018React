@@ -67,7 +67,7 @@ public class MainApplication extends Application implements ReactApplication {
             new AppCenterReactNativeAnalyticsPackage(MainApplication.this, getResources().getString(R.string.appCenterAnalytics_whenToEnableAnalytics)),
             new AppCenterReactNativePackage(MainApplication.this),
               new FingerprintAuthPackage(),
-//              new SplashScreenReactPackage(),
+              new SplashScreenReactPackage(),
               new ContextModuleReactPackage(),
               new RNDeviceInfo(),
               new RandomBytesPackage(),
