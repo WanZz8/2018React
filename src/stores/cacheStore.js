@@ -30,7 +30,7 @@ class CacheStore {
     }
 
     @computed get isLogin() {
-        console.log(this.status);
+        // console.log(this.status);
         return this.status;
     }
 
@@ -54,8 +54,8 @@ class CacheStore {
         const account = await AsyncStorage.getItem('account');
         const password = await AsyncStorage.getItem('password');
 
-        console.log(account);
-        console.log(password);
+        // console.log(account);
+        // console.log(password);
 
         if (!account || !password) { throw ''; }
         this.getUserInfo();

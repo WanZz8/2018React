@@ -8,10 +8,13 @@ import {
     ScrollView,
     Alert,
     Dimensions,
-    DeviceEventEmitter, Platform
+    DeviceEventEmitter,
+    Platform,
+    BackHandler, ToastAndroid
 } from 'react-native';
 import { observer, inject } from 'mobx-react/native';
 import Icons from 'react-native-vector-icons/Ionicons';
+import { NavigationActions } from 'react-navigation';
 
 const width = Dimensions.get('window').width; // 全屏宽高
 const height = Dimensions.get('window').height; // 全屏宽高
@@ -36,7 +39,7 @@ class MyAccount extends Component {
         headerLeft: (
             <TouchableOpacity
                 onPress={() => {
-                    navigation.goBack();
+                    navigation.navigate('Mine');
                 }}
                 style={{
                     marginLeft: 15,
@@ -98,10 +101,14 @@ class MyAccount extends Component {
                 show: data,
             });
         });
+
+        if (Platform.OS === 'android') {
+            BackHandler.addEventListener('hardwareBackPress', this.handleRefresh);
+        }
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps);
+        // console.log(nextProps);
         if (nextProps.isLogin !== this.state.isLogin) {
             //
         }
@@ -109,6 +116,12 @@ class MyAccount extends Component {
 
     componentWillUnmount() {
         this.subscription.remove();
+    }
+
+    handleRefresh = () => {
+        console.log(this.props);
+        const { state } = this.props.navigation;
+        state.params.refresh();
     }
 
     // 点击加币
@@ -134,7 +147,7 @@ class MyAccount extends Component {
 
     renderLogin() {
         let that = this;
-        return this.state.status && this.state.show ? (
+        return this.state.status ? (
             <View style={{
                 width,
                 alignItems: 'center',

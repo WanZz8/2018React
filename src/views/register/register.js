@@ -97,6 +97,8 @@ class Register extends Component {
         };
         this._onChangeText = this._onChangeText.bind(this);
         this.changeCode = this.changeCode.bind(this);
+        this.changeName = this.changeName.bind(this);
+        this.changePassword = this.changePassword.bind(this);
         this.sendCode = this.sendCode.bind(this);
         this.nextStep = this.nextStep.bind(this);
         this.submit = this.submit.bind(this);
@@ -148,6 +150,18 @@ class Register extends Component {
         });
     }
 
+    changeName(text) {
+        this.setState({
+            name: text
+        });
+    }
+
+    changePassword(text) {
+        this.setState({
+            password: text
+        });
+    }
+
     // 发送验证码
     sendCode() {
         Keyboard.dismiss();
@@ -181,11 +195,20 @@ class Register extends Component {
             if (res.status === 200) {
                 let body = await res.text();
                 body = JSON.parse(body);
-                console.log(body);
-                this.setState({ buttonState: false });
-                this.setState({
-                    countdown: 60
-                });
+                if (body.code === 200
+                    || body.status === 200
+                    || body.code === 0
+                    || body.errorCode === 200
+                    || body.errorCode === 0
+                    || body.resultCode === 200
+                    || body.resultCode === 0) {
+                    this.setState({ buttonState: false });
+                    this.setState({
+                        countdown: 60
+                    });
+                } else {
+                    Alert.alert('提示', body.errorMsg);
+                }
             }
             this.countTime();
         } catch (e) {
@@ -228,7 +251,20 @@ class Register extends Component {
                 let res = await fetch(`${HOST}${url}${str}`, {
                     method: 'POST'
                 });
-                this.setState({ next: false, buttonState: true });
+                if (res.status === 200) {
+                    let body = await res.text();
+                    body = JSON.parse(body);
+                    console.log(body);
+                    if (body.code === 200
+                        || body.status === 200
+                        || body.code === 0
+                        || body.errorCode === 200
+                        || body.errorCode === 0
+                        || body.resultCode === 200
+                        || body.resultCode === 0) {
+                        this.setState({ next: false, buttonState: true, mobileNumber: '' });
+                    }
+                }
             } catch (err) {
                 Alert.alert('Reminder', err.errorMsg);
             }
@@ -257,12 +293,23 @@ class Register extends Component {
             if (res.status === 200) {
                 let body = await res.text();
                 body = JSON.parse(body);
-                this.setState({
-                    countdown: 60
-                });
+                console.log(body);
+                if (body.code === 200
+                    || body.status === 200
+                    || body.code === 0
+                    || body.errorCode === 200
+                    || body.errorCode === 0
+                    || body.resultCode === 200
+                    || body.resultCode === 0) {
+                    this.setState({
+                        countdown: 60
+                    });
+                    this.props.navigation.navigate('Home');
+                    this.props.CacheStore.setLogin(this.state.name, this.state.password);
+                } else {
+                    Alert.alert('提示', body.errorMsg);
+                }
             }
-            this.props.navigation.navigate('Home');
-            this.props.CacheStore.setLogin(this.state.name, this.state.password);
         } catch (err) {
             Alert.alert('提示', err.errorMsg);
         }
@@ -331,6 +378,7 @@ class Register extends Component {
                                                 width: '80%',
                                                 paddingHorizontal: 10
                                             }}
+                                            value={this.state.mobileNumber}
                                             onChangeText={this._onChangeText}
                                             placeholder="手机号"
                                             underlineColorAndroid="transparent"
@@ -462,6 +510,7 @@ class Register extends Component {
                                                 width: '80%',
                                                 paddingHorizontal: 10
                                             }}
+                                            onChangeText={this.changeName}
                                             underlineColorAndroid="transparent"
                                             autoCapitalize="none"
                                             placeholder="请输入用户名"
@@ -486,6 +535,7 @@ class Register extends Component {
                                             underlineColorAndroid="transparent"
                                             autoCapitalize="none"
                                             placeholder="密码"
+                                            onChangeText={this.changePassword}
                                         />
                                     </View>
                                     <View

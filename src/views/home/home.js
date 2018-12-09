@@ -9,7 +9,10 @@ import {
     StatusBar,
     StyleSheet,
     Image,
-    Dimensions
+    BackHandler,
+    ToastAndroid,
+    Dimensions,
+    Platform
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { observer, inject } from 'mobx-react/native';
@@ -47,6 +50,12 @@ class HomePage extends Component {
         setTimeout(() => {
             this.setState({ swiperShow: true });
         }, 0);
+    }
+
+    componentWillUnmount() {
+        // if (Platform.OS === 'android') {
+        //     BackHandler.removeEventListener('hardwareBackPress', this.onBackAndroid);
+        // }
     }
 
     sharelink() {

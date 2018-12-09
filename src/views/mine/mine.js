@@ -65,11 +65,13 @@ class Mine extends Component {
     // }
 
     componentWillUnmount() {
+        console.log('卸载');
         this.subscription.remove();
     }
 
     render() {
         let that = this;
+        console.log(this.props.CacheStore.isLogin);
         return (
             <SafeAreaView style={MineStyles.root} color="#F8F7F4">
                 <ScrollView contentContainerStyle={{
@@ -90,7 +92,7 @@ class Mine extends Component {
                                 style={MineStyles.viewImg}
                                 onPress={
                                     () => {
-                                        this.props.CacheStore.isLogin && this.state.show
+                                        this.props.CacheStore.isLogin
                                             ? ''
                                             : this.props.navigation.navigate(
                                                 'Login', {
@@ -114,7 +116,7 @@ class Mine extends Component {
                                 }}
                                 >
                                     {
-                                        this.props.CacheStore.isLogin && this.state.show ? (
+                                        this.props.CacheStore.isLogin ? (
                                             <Image
                                                 source={IMG.person}
                                                 style={{
@@ -132,7 +134,7 @@ class Mine extends Component {
                                 }}
                                 >
                                     {
-                                        this.props.CacheStore.isLogin && this.state.show ? (
+                                        this.props.CacheStore.isLogin ? (
                                             <Text style={{
                                                 marginTop: 15,
                                                 color: '#f3f3f3',
@@ -489,9 +491,17 @@ class Mine extends Component {
                         <TouchableOpacity
                             onPress={
                                 () => {
-                                    this.props.CacheStore.isLogin && this.state.show
+                                    this.props.CacheStore.isLogin
                                         ? this.props.navigation.navigate(
-                                            'MyAccount', { show: this.state.show }
+                                            'MyAccount',
+                                            {
+                                                show: this.state.show,
+                                                refresh() {
+                                                    that.setState({
+                                                        status: true
+                                                    });
+                                                }
+                                            }
                                         ) : Alert.alert('提示', '请先登录', [
                                             {
                                                 text: '确定',

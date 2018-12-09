@@ -10,9 +10,10 @@ import {
     Dimensions,
     Text,
     StyleSheet,
-    DeviceEventEmitter
+    DeviceEventEmitter,
 } from 'react-native';
-import JPushModule from 'jpush-react-native';
+// import JPushModule from 'jpush-react-native';
+import { NavigationActions, } from 'react-navigation';
 import { observer, inject } from 'mobx-react/native';
 import codePush from 'react-native-code-push';
 import Splash from './utils/splash';
@@ -24,7 +25,7 @@ import RootNavigator from './routers/router';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
-const IMG = require('./img/loading/start.png');
+const IMG = require('./img/loading/loading.jpg');
 
 @codePush
 @inject('MainStore', 'CacheStore')
@@ -40,8 +41,15 @@ class AppNavigationState extends Component {
             step: 0
         };
         this.process = 0;
+        this.lastBackPressed = null;
         this.start = new Date().getTime();
         this.netChange = this.netChange.bind(this);
+    }
+
+    componentWillMount() {
+        // if (Platform.OS === 'android') {
+        //     BackHandler.addEventListener('hardwareBackPress', this.onBackAndroid);
+        // }
     }
 
     componentDidMount() {
@@ -51,10 +59,31 @@ class AppNavigationState extends Component {
         this.loadingFinish();
         this.props.MainStore.getData();
         this.props.CacheStore.init();
+        if (Platform.OS === 'android') {
+            BackHandler.addEventListener('hardwareBackPress', this.onBackAndroid);
+        }
     }
 
     componentWillUnmount() {
-        //
+        if (Platform.OS === 'android') {
+            this.lastBackPressed = null;
+            BackHandler.removeEventListener('hardwareBackPress', this.onBackAndroid);
+        }
+    }
+
+    onBackAndroid = () => {
+        const { dispatch } = this.root;
+        const { nav } = this.root.state;
+        console.log(this.root);
+        if (nav.index === 0) {
+            if (this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {
+                return false;
+            }
+            this.lastBackPressed = Date.now();
+            ToastAndroid.show('再按一次退出应用', ToastAndroid.SHORT);
+            dispatch(NavigationActions.back());
+            return true;
+        }
     }
 
     loadingText() {
