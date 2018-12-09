@@ -67,10 +67,9 @@ class Controller extends Component {
     render() {
         let that = this;
         console.log(this.state.isLogin);
-        console.log(this.state.status);
         return (
             <View style={ControllerStyles.controllerRoot}>
-                {this.state.isLogin && this.state.status
+                {this.state.isLogin
                     ? [
                         <View
                             style={{
@@ -102,7 +101,7 @@ class Controller extends Component {
                                     marginRight: 10
                                 }}
                                 >
-                                    {this.state.isLogin && this.state.status
+                                    {this.state.isLogin
                                         ? this.state.balance
                                         : 0}
                                     币

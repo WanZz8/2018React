@@ -15,7 +15,7 @@ import {
     DOMAIN
 } from '../../config/baseConfig';
 
-const inviteFriend = require('./../../img/mine/recommend-bg.jpg');
+const inviteFriend = require('./../../img/mine/share.jpg');
 
 const width = Dimensions.get('window').width; // 全屏宽高
 const height = Dimensions.get('window').height;

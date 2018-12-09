@@ -27,7 +27,7 @@ const width = Dimensions.get('window').width; // 全屏宽高
 const height = Dimensions.get('window').height; // 全屏宽高
 const IMG = require('../../img/login/logo.png');
 
-@inject('MainStore')
+@inject('MainStore', 'CacheStore')
 @observer
 class TradePage extends Component {
     static navigationOptions = {
@@ -163,6 +163,7 @@ class TradePage extends Component {
 
     render() {
         let date = new Date().getTime();
+        console.log(this.props.CacheStore.isLogin);
         return (
             <SafeBody style={TradeStyles.root}>
                 <Header
@@ -317,9 +318,7 @@ class TradePage extends Component {
                         color: '#9e9e9e',
                         marginVertical: 15
                     }}
-                    >
-                        休市
-                    </Text>
+                    />
                 </View>
                 <Controller
                     navigation={this.props.navigation}

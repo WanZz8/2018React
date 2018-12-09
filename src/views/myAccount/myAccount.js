@@ -273,7 +273,7 @@ class MyAccount extends Component {
                             flex: 2,
                         }}
                         >
-                            {this.state.status && this.state.show ? this.state.balance : 0}
+                            {this.state.status ? this.state.balance : 0}
                             币
                         </Text>
                         <TouchableOpacity

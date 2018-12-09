@@ -305,6 +305,7 @@ class Register extends Component {
                         countdown: 60
                     });
                     this.props.navigation.navigate('Home');
+                    this.props.CacheStore.getUserInfo();
                     this.props.CacheStore.setLogin(this.state.name, this.state.password);
                 } else {
                     Alert.alert('提示', body.errorMsg);
