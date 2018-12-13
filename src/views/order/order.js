@@ -215,7 +215,7 @@ class Order extends Component {
                 Alert.alert('提示', '下单成功');
                 this.props.CacheStore.update();
                 this.props.CacheStore.getScheme();
-                this.props.navigation.navigate('Position');
+                this.props.navigation.goBack();
             } else {
                 Alert.alert('提示', body.errorMsg);
             }

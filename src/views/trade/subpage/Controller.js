@@ -9,7 +9,8 @@ import {
     Alert,
     Platform,
     DeviceEventEmitter,
-    Dimensions
+    Dimensions,
+    AsyncStorage
 } from 'react-native';
 import Icons from 'react-native-vector-icons/Ionicons';
 import { inject } from 'mobx-react/native';
@@ -62,6 +63,16 @@ class Controller extends Component {
         if (this.state.status !== prevState.status || this.state.balance !== prevState.balance) {
             this.render();
         }
+    }
+
+    async chooseStar(code) {
+        const aryStr = await AsyncStorage.getItem('self');
+        const ary = JSON.parse(aryStr) || [];
+        ary.includes(code) ? ary.remove(code) : ary.push(code);
+        const newAryStr = JSON.stringify(ary);
+        AsyncStorage.setItem('self', newAryStr);
+        this.setState(preState => ({ active: !preState.active }));
+        Alert.alert('提示', '操作成功');
     }
 
     render() {
@@ -142,11 +153,11 @@ class Controller extends Component {
                                 }
                             )}
                             {this.renderFootButton(
-                                '我的持仓',
+                                '添加自选',
                                 'white',
                                 this.state.active ? '#C7C7CC' : '#CD3A3C',
                                 () => {
-                                    this.props.navigation.navigate('Position');
+                                    this.chooseStar(code);
                                 }
                             )}
                         </View>]

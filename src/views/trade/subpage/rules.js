@@ -442,6 +442,6 @@ const RulesStyles = StyleSheet.create({
     },
     infoContent: {
         backgroundColor: '#fff',
-        padding: 10
+        padding: 15
     },
 });

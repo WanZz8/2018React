@@ -60,22 +60,21 @@ class AppNavigationState extends Component {
         this.loadingFinish();
         this.props.MainStore.getData();
         this.props.CacheStore.init();
-        if (Platform.OS === 'android') {
-            BackHandler.addEventListener('hardwareBackPress', this.onBackAndroid);
-        }
+        // if (Platform.OS === 'android') {
+        //     BackHandler.addEventListener('hardwareBackPress', this.onBackAndroid);
+        // }
     }
 
     componentWillUnmount() {
-        if (Platform.OS === 'android') {
-            this.lastBackPressed = null;
-            BackHandler.removeEventListener('hardwareBackPress', this.onBackAndroid);
-        }
+        // if (Platform.OS === 'android') {
+        //     this.lastBackPressed = null;
+        //     BackHandler.removeEventListener('hardwareBackPress', this.onBackAndroid);
+        // }
     }
 
     onBackAndroid = () => {
         const { dispatch } = this.root;
         const { nav } = this.root.state;
-        console.log(this.root);
         if (nav.index === 0) {
             if (this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {
                 return false;

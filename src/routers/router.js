@@ -50,7 +50,7 @@ const Tab = TabNavigator(
             screen: TradePage,
             navigationOptions: ({ navigation }) => (
                 {
-                    tabBarLabel: '交易',
+                    tabBarLabel: '行情',
                     tabBarIcon: ({ focused, tintColor }) => (
                         <Icons
                             name="logo-codepen"
