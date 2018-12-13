@@ -7,10 +7,11 @@ import {
     Dimensions,
     TouchableOpacity,
     ScrollView,
-    TouchableHighlight, Platform
+    TouchableHighlight,
+    Platform
 } from 'react-native';
 import Icons from 'react-native-vector-icons/Ionicons';
-import { SCREEN_WIDTH } from '../../config/baseConfig';
+import { observer, inject } from 'mobx-react/native';
 
 const width = Dimensions.get('window').width; // 全屏宽高
 const height = Dimensions.get('window').height; // 全屏宽高
@@ -34,6 +35,7 @@ function isIphoneX() {
     );
 }
 
+@inject('CacheStore', 'AssetsStore')
 class Order extends Component {
     static navigationOptions = ({ navigation }) => ({
         title: '模拟交易',
@@ -82,6 +84,7 @@ class Order extends Component {
             contract: '',
             volumeList: [],
             buy: '',
+            code: '',
             stopLossList: [],
             stopProfitList: []
 
@@ -89,7 +92,17 @@ class Order extends Component {
     }
 
     componentWillMount() {
-
+        const { code, balance } = this.props.navigation.state.params;
+        const scheme = this.props.CacheStore.totalScheme[code];
+        console.log(scheme);
+        this.setState({
+            code,
+            balance,
+            stopProfit: scheme.stopProfitList[0],
+            stopLossList: scheme.stopLossList,
+            stopLoss: scheme.stopLossList[0],
+            chargeUnit: scheme.chargeUnit,
+        });
     }
 
     componentDidMount() {
@@ -143,7 +156,7 @@ class Order extends Component {
                             fontSize: 20
                         }}
                         >
-                            14833
+                            {this.state.balance}
                         </Text>
                     </View>
 
@@ -165,7 +178,7 @@ class Order extends Component {
                             flex: 1.2
                         }}
                         >
-                            CL1901
+                            {this.state.code}
                         </Text>
                         <Text style={{
                             marginRight: 8,

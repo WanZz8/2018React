@@ -190,6 +190,8 @@ class Login extends Component {
                    || body.resultCode === 200
                    || body.resultCode === 0) {
                     this.props.CacheStore.setLogin(this.state.account, this.state.password);
+                    this.props.CacheStore.update();
+                    this.props.CacheStore.getScheme();
                     this.props.CacheStore.getUserInfo();
                     const { goBack, state } = this.props.navigation;
                     state.params.refresh();

@@ -8,6 +8,16 @@ import {
 } from '../config/baseConfig';
 
 class CacheStore {
+    @observable username = null;
+
+    @observable loginIp = null;
+
+    @observable withdrawPW = null;
+
+    @observable money = 0;
+
+    @observable game = 0;
+
     // 0-未登录,1-已登录
     @observable status = false;
 
@@ -25,6 +35,10 @@ class CacheStore {
 
     @observable userId = 0;
 
+    @observable initial = false;
+
+    @observable total = {};
+
     constructor() {
         this.status = false;
     }
@@ -36,6 +50,10 @@ class CacheStore {
 
     @computed get GameBalance() {
         return this.gameBalance;
+    }
+
+    @computed get totalScheme() {
+        return this.total;
     }
 
     @action
@@ -82,8 +100,33 @@ class CacheStore {
     }
 
     @action
+    async getScheme() {
+        if (this.initial) return;
+        let str = '';
+        str = '?';
+        const data = {
+            schemeSort: 0,
+            tradeType: 1,
+            beginTime: '',
+            _: new Date().getTime()
+        };
+        for (const [n, v] of Object.entries(data)) {
+            str += `${n}=${v}&`;
+        }
+        let url = '/trade/scheme.htm';
+        let result = await GET(`${HOST}${url}${str}`);
+        if (!!result && result.tradeList.length > 0) {
+            for (const o of result.tradeList) {
+                this.total[o.contCode] = o;
+            }
+            this.initial = true;
+        }
+        // console.log(result);
+        // console.log(this.total);
+    }
+
+    @action
     setRes(res) {
-        console.log(res);
         if (res && res.code === 200) {
             if (res && res.user && res.asset) {
                 this.username = res.user.username;
@@ -163,6 +206,38 @@ class CacheStore {
     @action
     addSimBalance() {
         return GET(`${HOST}/trade/addScore.htm`);
+    }
+
+    @action
+    update() {
+        GET(`${HOST}/mine/index.htm`).then((res) => {
+            if (res.code === 200) {
+                if (res.asset) {
+                    this.money = res.asset.money;
+                    this.game = res.asset.game;
+                }
+                if (res.user) {
+                    const {
+                        id, loginIp, username, withdrawPw
+                    } = res.user;
+                    this.userId = id;
+                    this.loginIp = loginIp;
+                    this.username = username;
+                    this.withdrawPW = withdrawPw;
+                }
+            }
+        });
+    }
+
+    @action
+    reset() {
+        for (const o of this.currency) {
+            this[o].money = 0;
+        }
+        this.userId = null;
+        this.username = null;
+        this.loginIp = null;
+        this.withdrawPW = null;
     }
 }
 

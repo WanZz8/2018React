@@ -67,6 +67,7 @@ class Controller extends Component {
     render() {
         let that = this;
         console.log(this.state.isLogin);
+        const { code } = this.props;
         return (
             <View style={ControllerStyles.controllerRoot}>
                 {this.state.isLogin
@@ -133,7 +134,9 @@ class Controller extends Component {
                                 'white',
                                 '#CD3A3C',
                                 () => {
-                                    this.props.navigation.navigate('Order');
+                                    this.props.navigation.navigate('Order',
+                                        { code,
+                                        balance: this.state.balance });
                                 }
                             )}
                             {this.renderFootButton(

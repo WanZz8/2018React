@@ -324,6 +324,7 @@ class TradePage extends Component {
                     navigation={this.props.navigation}
                     refresh={() => { this.refresh(); }}
                     status={this.state.show}
+                    code={this.state.code}
                 />
             </SafeBody>
         );
