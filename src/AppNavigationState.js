@@ -17,11 +17,12 @@ import { NavigationActions, } from 'react-navigation';
 import { observer, inject } from 'mobx-react/native';
 import codePush from 'react-native-code-push';
 import Splash from './utils/splash';
-// import { NavigationActions, } from 'react-navigation';
-// import { Toast } from 'teaset';
-
+import extend from './utils/extend';
 // 路由
 import RootNavigator from './routers/router';
+// import { NavigationActions, } from 'react-navigation';
+// import { Toast } from 'teaset';
+extend();
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;

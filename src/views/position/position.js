@@ -7,6 +7,7 @@ import {
     Dimensions, TouchableOpacity, Platform
 } from 'react-native';
 import Icons from 'react-native-vector-icons/Ionicons';
+import { inject } from 'mobx-react/native';
 
 // import Config, { DOMAIN } from '../../../config';
 
@@ -20,6 +21,8 @@ const RATIO = height / X_WIDTH;
 
 const X_HEIGHT = 812;
 
+const HAS_CRYPTO = false;
+
 function isIphoneX() {
     return (
         (Platform.OS === 'ios'
@@ -32,7 +35,7 @@ function isIphoneX() {
 }
 
 // 金银
-
+@inject('CacheStore', 'AssetsStore')
 class Position extends Component {
     static navigationOptions = ({ navigation }) => ({
         title: '持仓',
@@ -89,6 +92,9 @@ class Position extends Component {
     }
 
     render() {
+        let data = this.props.AssetsStore.currency;
+        data.remove('USD');
+        data = data.map(e => ({ name: e, value: e }));
         return (
             <View style={PositionStyle.root}>
                 <Image source={IMG} />

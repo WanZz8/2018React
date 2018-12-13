@@ -135,8 +135,10 @@ class Controller extends Component {
                                 '#CD3A3C',
                                 () => {
                                     this.props.navigation.navigate('Order',
-                                        { code,
-                                        balance: this.state.balance });
+                                        {
+                                            code,
+                                            balance: this.state.balance
+                                        });
                                 }
                             )}
                             {this.renderFootButton(
