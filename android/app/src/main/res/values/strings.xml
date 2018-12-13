@@ -4,9 +4,9 @@
     <string name="version">1.0.0</string>
     <string name="code_push">FGgxC4soCmSZk8zSqNpA8VD1wqj1Hy78ZEHJN</string>
     <string name="rnum_appkey">5bf6442bb465f5b3c1000032</string>
-    <string name="rnum_channel">tencent</string>
+    <string name="rnum_channel">baidu</string>
     <string name="jpush_appkey">d873eb64832b9f8481172c3b</string>
-    <string name="jpush_channel">tencent</string>
+    <string name="jpush_channel">baidu</string>
     <!--<string name="title_activity_splash">SplashActivity</string>-->
     <string name="appCenterAnalytics_whenToEnableAnalytics" moduleConfig="true">ENABLE_IN_JS</string>
     <string name="appCenterCrashes_whenToSendCrashes" moduleConfig="true">ASK_JAVASCRIPT</string>

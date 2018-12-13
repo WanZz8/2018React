@@ -333,6 +333,7 @@ class Order extends Component {
                         borderBottomWidth: 1,
                         flexDirection: 'row',
                         height: 50,
+                        width,
                         justifyContent: 'space-between'
                     }}
                     >
@@ -343,7 +344,7 @@ class Order extends Component {
                             alignSelf: 'center'
                         }}
                         >
-                            设定止盈
+                            设定止损
                         </Text>
                         <View style={{
                             paddingHorizontal: 8,
@@ -389,7 +390,9 @@ class Order extends Component {
                         borderBottomWidth: 1,
                         flexDirection: 'row',
                         height: 50,
-                        justifyContent: 'space-between'
+                        width,
+                        justifyContent: 'space-between',
+                        alignSelf: 'center'
                     }]}
                     >
                         <Text style={[{
