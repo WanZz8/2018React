@@ -8,14 +8,19 @@ import {
     TouchableOpacity,
     ScrollView,
     TouchableHighlight,
-    Platform
+    Platform,
+    Alert, DeviceEventEmitter
 } from 'react-native';
 import Icons from 'react-native-vector-icons/Ionicons';
-import { observer, inject } from 'mobx-react/native';
+import { observer, inject } from 'mobx-react/native'; // 全屏宽高
+import { formatDate, getIdentity } from '../../utils/tool';
+import {
+    HOST,
+    DOMAIN, QUOTE
+} from '../../config/baseConfig';
 
 const width = Dimensions.get('window').width; // 全屏宽高
-const height = Dimensions.get('window').height; // 全屏宽高
-
+const height = Dimensions.get('window').height;
 const IMG = require('../../img/404.jpg');
 
 const X_WIDTH = 375;
@@ -34,6 +39,28 @@ function isIphoneX() {
         || Platform.OS === 'android'
     );
 }
+
+const multiplication = function (arg1, arg2) {
+    let m = 0;
+
+
+    const s1 = arg1.toString();
+
+
+    const s2 = arg2.toString();
+
+    try {
+        m += s1.split('.')[1].length;
+    } catch (e) {
+    }
+
+    try {
+        m += s2.split('.')[1].length;
+    } catch (e) {
+    }
+
+    return Number(s1.replace('.', '')) * Number(s2.replace('.', '')) / Math.pow(10, m);
+};
 
 @inject('CacheStore', 'AssetsStore')
 class Order extends Component {
@@ -77,31 +104,62 @@ class Order extends Component {
         }
     });
 
+    _isBuy = null;
+
+    _contract = null;
+
+    _currency = null;
+
+    _volumeList = null;
+
+    _stopProfitList = null;
+
+    _stopProfitListUpdate = null;
+
+    _stopLossList = null;
+
+    _stopLossIndex= 0;
+
+    _chargeUnit = null;
+
     constructor(props) {
         super(props);
         this.state = {
-            balance: '',
-            contract: '',
-            volumeList: [],
-            buy: '',
-            code: '',
-            stopLossList: [],
-            stopProfitList: []
-
+            balance: 0, // Assets[scheme.currency].money,
+            stopProfit: '',
+            stopLossList: '',
+            stopLoss: '',
+            chargeUnit: '',
+            volume: 1,
+            price: 0.00
         };
+        const { code, balance } = this.props.navigation.state.params;
+        const scheme = this.props.CacheStore.totalScheme[code];
+        this._isBuy = true;
+        this._contract = code;
+        this._currency = scheme.currency;
+        this._volumeList = scheme.volumeList;
+        this._chargeUnit = scheme.chargeUnit;
+        this._stopProfitList = scheme.stopProfitList;
+        this._stopProfitListUpdate = scheme.stopProfitList;
+        this._stopLossList = scheme.stopLossList;
+        console.log(scheme);
     }
 
     componentWillMount() {
         const { code, balance } = this.props.navigation.state.params;
         const scheme = this.props.CacheStore.totalScheme[code];
-        console.log(scheme);
+        // console.log(scheme);
         this.setState({
             code,
             balance,
+            volumeList: scheme.volumeList,
             stopProfit: scheme.stopProfitList[0],
             stopLossList: scheme.stopLossList,
             stopLoss: scheme.stopLossList[0],
             chargeUnit: scheme.chargeUnit,
+            volume: 1,
+            price: 0.00
         });
     }
 
@@ -109,9 +167,18 @@ class Order extends Component {
         // this.getNewsInfo(0);
     }
 
+    selectStopLoss(i) {
+        this._stopLossIndex = i;
+        this.setState({
+            stopLoss: this.state.stopLossList[i],
+            stopProfit: this._stopProfitListUpdate[i]
+        });
+    }
+
+
     selectVolume(o) {
-        const stopLoss = this.state.stopLossList.map(e => e.mul(o));
-        const stopProfit = this.state.stopProfitList.map(e => e.mul(o));
+        const stopLoss = this._stopLossList.map(e => e.mul(o));
+        const stopProfit = this._stopProfitList.map(e => e.mul(o));
         this._stopProfitListUpdate = stopProfit;
 
         this.setState({
@@ -123,20 +190,65 @@ class Order extends Component {
         });
     }
 
-    selectStopLoss(i) {
-        this._stopLossIndex = i;
-        this.setState({
-            stopLoss: this.state.stopLossList[i],
-            stopProfit: this._stopProfitListUpdate[i]
-        });
+    priceUpdate(data) {
+        if (this._isBuy) {
+            this.setState({ price: data.wt_sell_price });
+        } else {
+            this.setState({ price: data.wt_buy_price });
+        }
     }
 
     async submit() {
-        this.props.navigation.navigate('Position');
+        let str = ''; const
+            data = {
+                identity: getIdentity(16),
+                tradeType: 2,
+                source: '下单',
+                commodity: this.state.code,
+                contract: this._contract,
+                isBuy: this._isBuy,
+                price: 0,
+                stopProfit: this.state.stopProfit,
+                stopLoss: this.state.stopLoss,
+                serviceCharge: this.state.chargeUnit,
+                eagleDeduction: 0,
+                volume: this.state.volume,
+                moneyType: 0,
+                platform: Platform.OS
+            };
+        str = '?';
+        for (const [n, v] of Object.entries(data)) {
+            str += `${n}=${v}&`;
+        }
+        let url = '/trade/open.htm';
+        let res = await fetch(`${HOST}${url}${str}`, {
+            method: 'POST'
+        });
+        if (res.status === 200) {
+            let body = await res.text();
+            body = JSON.parse(body);
+            if (body.code === 200
+                    || body.status === 200
+                    || body.code === 0
+                    || body.errorCode === 500
+                    || body.errorCode === 0
+                    || body.resultCode === 200
+                    || body.resultCode === 0) {
+                Alert.alert('提示', '下单成功');
+                this.props.CacheStore.update();
+                this.props.CacheStore.getScheme();
+                this.props.navigation.navigate('Position');
+            } else {
+                Alert.alert('提示', body.errorMsg);
+            }
+        }
     }
 
     render() {
         const submitButtonColor = this.state.buy ? RAISE : FALL;
+        console.log(this.state.stopProfit);
+        console.log(this._volumeList);
+
         return (
             <View style={OrderStyle.root}>
                 <ScrollView>
@@ -216,10 +328,11 @@ class Order extends Component {
                             marginBottom: 10
                         }}
                         >
-                            {this.state.volumeList.map(o => (
+                            {this._volumeList.map((o, idx) => (
                                 <TouchableHighlight
                                     onPress={() => this.selectVolume(o)}
                                     activeOpacity={1}
+                                    key={idx}
                                     underlayColor="transparent"
                                     style={[OrderStyle.btn,
                                         this.state.volume === o
@@ -267,6 +380,7 @@ class Order extends Component {
                                     <TouchableHighlight
                                         onPress={() => this.selectStopLoss(i)}
                                         activeOpacity={1}
+                                        key={i}
                                         underlayColor="transparent"
                                         style={[OrderStyle.btn,
                                             { minWidth: 70 }, this.state.stopLoss === o
@@ -327,7 +441,7 @@ class Order extends Component {
                                 lineHeight: 30
                             }}
                             >
-                                5950
+                                {this.state.stopProfit}
                             </Text>
                         </View>
                     </View>
