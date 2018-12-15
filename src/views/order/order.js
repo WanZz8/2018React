@@ -329,10 +329,9 @@ class Order extends Component {
                     <View style={{
                         borderTopColor: '#eeeff0',
                         borderBottomColor: '#eeeff0',
-                        borderTopWidth: 1,
                         borderBottomWidth: 1,
-                        flexDirection: 'row',
-                        height: 50,
+                        // flexDirection: 'row',
+                        // height: 50,
                         width,
                         justifyContent: 'space-between'
                     }}
@@ -341,7 +340,8 @@ class Order extends Component {
                             color: '#F7C5B6',
                             marginLeft: 8,
                             fontSize: 16,
-                            alignSelf: 'center'
+                            height: 40,
+                            lineHeight: 40
                         }}
                         >
                             设定止损
@@ -349,7 +349,8 @@ class Order extends Component {
                         <View style={{
                             paddingHorizontal: 8,
                             flexDirection: 'row',
-                            justifyContent: 'center'
+                            marginBottom: 10
+                            // justifyContent: 'center'
                         }}
                         >
                             {
@@ -386,7 +387,6 @@ class Order extends Component {
                     <View style={[{
                         borderTopColor: '#eeeff0',
                         borderBottomColor: '#eeeff0',
-                        borderTopWidth: 1,
                         borderBottomWidth: 1,
                         flexDirection: 'row',
                         height: 50,
